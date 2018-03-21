@@ -1,0 +1,292 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_blank_color"
+    android:orientation="vertical">
+
+
+    <td.com.xiaoheixiong.views.pulltorefresh.PullLayout
+        android:id="@+id/refresh_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/refresh_head" />
+
+        <td.com.xiaoheixiong.views.pulltorefresh.PullableRefreshScrollView
+            android:id="@+id/mScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <RelativeLayout
+                android:id="@+id/rl_top"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp">
+
+                        <TextView
+                            android:id="@+id/address_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:drawablePadding="8dp"
+                            android:drawableRight="@drawable/home_pull_down"
+                            android:gravity="center"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="11.5dp"
+                            android:text="深圳"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/gray_bg2"
+                            android:gravity="center">
+
+                            <EditText
+                                android:id="@+id/search_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:background="@color/none"
+                                android:drawableLeft="@drawable/home_search"
+                                android:drawablePadding="5dp"
+                                android:gravity="center"
+                                android:hint="搜 索"
+                                android:paddingLeft="60dp"
+                                android:paddingRight="60dp"
+                                android:textColorHint="@color/tv_color4"
+                                android:textSize="@dimen/size_13" />
+
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+                    <FrameLayout
+                        android:id="@+id/fl_banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <td.com.xiaoheixiong.views.viewpager.LoopViewPager
+                            android:id="@+id/ve_pager"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+
+                        <TextView
+                            android:id="@+id/indicator"
+                            android:layout_width="wrap_content"
+                            android:layout_height="16dp"
+                            android:layout_gravity="bottom|right|center"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/guide_shape"
+                            android:gravity="center"
+                            android:text="@string/viewpager_indicator"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/size_12" />
+
+
+                    </FrameLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:background="@color/white">
+
+                        <android.support.v4.view.ViewPager
+                            android:id="@+id/viewpager"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp" />
+
+                        <LinearLayout
+                            android:id="@+id/ll_dot"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center"
+                            android:orientation="horizontal" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="45dp"
+                            android:background="@color/white"
+                            android:drawableLeft="@drawable/home_seckill"
+                            android:drawablePadding="6dp"
+                            android:gravity="center|left"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:text="秒秒"
+                            android:textColor="@color/tv_color5"
+                            android:textSize="@dimen/size_18" />
+
+
+                        <TextView
+                            android:id="@+id/tv_miaomiao"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:background="@color/white"
+                            android:drawablePadding="6dp"
+                            android:drawableRight="@drawable/home_more"
+                            android:gravity="center|right"
+                            android:paddingRight="10dp"
+                            android:text="更多"
+                            android:textColor="@color/tv_color15"
+                            android:textSize="@dimen/size_14"
+                            android:visibility="invisible"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/line_color" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white">
+
+                        <td.com.xiaoheixiong.views.MyGridview
+                            android:id="@+id/gv_miaomiao"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="18dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="15dp"
+                            android:background="@color/white"
+                            android:horizontalSpacing="15dp"
+                            android:numColumns="2"
+                            android:scrollbars="none" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="45dp"
+                            android:background="@color/white"
+                            android:drawableLeft="@drawable/home_purchase"
+                            android:drawablePadding="6dp"
+                            android:gravity="center|left"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:text="团团"
+                            android:textColor="@color/tv_color7"
+                            android:textSize="@dimen/size_18" />
+
+                        <TextView
+                            android:id="@+id/tv_tuantuan"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:background="@color/white"
+                            android:drawablePadding="6dp"
+                            android:drawableRight="@drawable/home_more"
+                            android:gravity="center|right"
+                            android:paddingRight="10dp"
+                            android:text="更多"
+                            android:textColor="@color/tv_color15"
+                            android:textSize="@dimen/size_14"
+                            android:visibility="invisible"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/line_color" />
+
+                    <td.com.xiaoheixiong.views.MyListView
+                        android:id="@+id/lv_tuantuan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:cacheColorHint="#00000000"
+                        android:divider="@color/transparent"
+                        android:dividerHeight="0.5dp"
+                        android:listSelector="@android:color/transparent"
+                        android:scrollbars="none" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="15dp"
+                        android:background="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/tv_youyou"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:drawableLeft="@drawable/home_merchant"
+                        android:drawablePadding="6dp"
+                        android:drawableRight="@drawable/home_more"
+                        android:gravity="center|left"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:text="优优商家"
+                        android:textColor="@color/tv_color6"
+                        android:textSize="@dimen/size_18" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/line_color" />
+
+
+                    <td.com.xiaoheixiong.views.MyListView
+                        android:id="@+id/lv_yy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:cacheColorHint="#00000000"
+                        android:divider="@null"
+                        android:dividerHeight="0dp"
+                        android:listSelector="@android:color/transparent"
+                        android:paddingBottom="20dp"
+                        android:scrollbars="none" />
+
+
+                </LinearLayout>
+            </RelativeLayout>
+        </td.com.xiaoheixiong.views.pulltorefresh.PullableRefreshScrollView>
+
+        <include layout="@layout/load_more" />
+    </td.com.xiaoheixiong.views.pulltorefresh.PullLayout>
+
+
+</LinearLayout>

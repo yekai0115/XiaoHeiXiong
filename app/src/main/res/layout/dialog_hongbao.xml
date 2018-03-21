@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/Transparent"
+    android:clipChildren="false"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:id="@+id/mainImg_rl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/main_img"
+                android:layout_width="240dp"
+                android:layout_height="280dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/hongbao_bg3" />
+
+            <ImageView
+                android:id="@+id/out_img"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignRight="@+id/main_img"
+                android:layout_alignTop="@+id/main_img"
+                android:layout_marginTop="-20dp"
+                android:layout_marginRight="-18dp"
+                android:src="@mipmap/x_icon" />
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/hb_bg_ll"
+            android:layout_width="375dp"
+            android:layout_height="500dp"
+            android:background="@mipmap/hongbao_bg1"
+            android:clipChildren="false"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="190dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@mipmap/hb_button" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/openHB_ll"
+            android:layout_width="375dp"
+            android:layout_height="500dp"
+            android:background="@mipmap/hongbao_bg3"
+            android:clipChildren="false"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/money_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="350dp"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="25sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <!-- corner_bg -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="340dp"
+                android:background="@color/white"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:id="@+id/re_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp" 
+                    android:background="@color/blue_btn">
+                   
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"                       
+                        android:text="提 示"                    
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+                </RelativeLayout>              
+
+                
+                <LinearLayout 
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="30dp">
+                    
+                    <ImageView 
+                        android:id="@+id/successfail_img"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@mipmap/app_icon"
+                        android:layout_gravity="center_horizontal"                        
+                        />
+                    
+                   <TextView
+                    android:id="@+id/tv_prompt"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"                  
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="15.0dip"
+                    android:paddingRight="15.0dip"
+                    android:paddingTop="15dp"
+                    android:text="提交成功"
+                    android:textColor="@color/black"
+                    android:textSize="20.0dip" />                    
+                    </LinearLayout>
+                    
+               
+                <LinearLayout 
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp">
+                      
+                    <TextView
+                    android:id="@+id/tv_response"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"                  
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="15.0dip"
+                    android:paddingRight="15.0dip"                                                     
+                    android:textColor="@color/red"
+                    android:textSize="16.0dip" />   
+                
+                </LinearLayout>
+                     
+
+                <RelativeLayout
+                    android:id="@+id/lin_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal" >
+
+                    <TextView
+                        android:id="@+id/btn_left"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="30dp"
+                        android:background="@drawable/blue_btn"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center"
+                        android:text="我知道了"
+                        android:textColor="@color/white"
+                        android:textSize="18.0dip" />
+                </RelativeLayout>
+
+            </LinearLayout>
+                <!-- <TextView -->
+                <!-- android:layout_width="match_parent" -->
+                <!-- android:layout_height="1dp" -->
+                <!-- android:background="@color/applin" /> -->
+
+            </LinearLayout>
+        
+
+</LinearLayout>

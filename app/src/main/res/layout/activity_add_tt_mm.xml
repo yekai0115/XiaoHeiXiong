@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_blank_color"
+    android:orientation="vertical">
+
+    <include layout="@layout/xiaoheixiong_title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center"
+                    android:text="标题"
+                    android:textColor="@color/tv_color9"
+                    android:textSize="@dimen/size_15" />
+
+                <EditText
+                    android:id="@+id/ed_title"
+                    android:layout_width="fill_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="27dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@null"
+                    android:gravity="center|left"
+                    android:hint="请输入卡券标题"
+                    android:inputType="text"
+                    android:textColor="@color/tv_color9"
+                    android:textColorHint="@color/tv_color20"
+                    android:textSize="@dimen/size_15" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/applin" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:paddingRight="15dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center"
+                    android:text="价格"
+                    android:textColor="@color/tv_color9"
+                    android:textSize="@dimen/size_15" />
+
+                <EditText
+                    android:id="@+id/ed_money"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="27dp"
+                    android:layout_marginRight="35dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="center|left"
+                    android:hint="请输入价格"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/tv_color9"
+                    android:textColorHint="@color/tv_color20"
+                    android:textSize="@dimen/size_15" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center"
+                    android:text="元"
+                    android:textColor="@color/tv_color9"
+                    android:textSize="@dimen/size_15" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/applin" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_time"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="倒计时"
+                    android:textColor="@color/tv_color9"
+                    android:textSize="@dimen/size_15" />
+
+
+                <EditText
+                    android:id="@+id/ed_endTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center|left"
+                    android:hint="请选择秒杀持续时间"
+                    android:layout_marginLeft="13dp"
+                    android:drawableRight="@drawable/new_select"
+                    android:editable="false"
+                    android:background="@null"
+                    android:textColor="@color/tv_color9"
+                    android:textColorHint="@color/tv_color20"
+                    android:textSize="@dimen/size_15" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_line"
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/applin" />
+
+            <LinearLayout
+                android:id="@+id/ll_mm_num"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:paddingRight="15dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center"
+                    android:text="数量"
+                    android:textColor="@color/tv_color9"
+                    android:textSize="@dimen/size_15" />
+
+                <EditText
+                    android:id="@+id/ed_num"
+                    android:layout_width="fill_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="27dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@null"
+                    android:gravity="center|left"
+                    android:hint="请输入卡券数量"
+                    android:inputType="phone"
+                    android:textColor="@color/tv_color9"
+                    android:textColorHint="@color/tv_color20"
+                    android:textSize="@dimen/size_15" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_tt_num"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:paddingRight="15dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center"
+                    android:text="人数"
+                    android:textColor="@color/tv_color9"
+                    android:textSize="@dimen/size_15" />
+
+                <EditText
+                    android:id="@+id/ed_tt_num"
+                    android:layout_width="fill_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="27dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@null"
+                    android:gravity="center|left"
+                    android:hint="请输入成团人数"
+                    android:inputType="phone"
+                    android:textColor="@color/tv_color9"
+                    android:textColorHint="@color/tv_color20"
+                    android:textSize="@dimen/size_15" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_mm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="13dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="活动展示图"
+                    android:textColor="@color/tv_color9"
+                    android:textSize="@dimen/size_15" />
+
+
+                <ImageView
+                    android:id="@+id/img_mm"
+                    android:layout_width="135dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="25dp"
+                    android:layout_marginTop="20dp"
+                    android:scaleType="fitXY"
+                    android:background="@drawable/new_addition1"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_tt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="13dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="首页展示图"
+                    android:textColor="@color/tv_color9"
+                    android:textSize="@dimen/size_15" />
+
+
+                <ImageView
+                    android:id="@+id/img_tt"
+                    android:layout_width="244dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="25dp"
+                    android:layout_marginTop="20dp"
+                    android:scaleType="fitXY"
+                    android:background="@drawable/new_addition2" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:text="详情页展示图"
+                    android:textColor="@color/tv_color9"
+                    android:textSize="@dimen/size_15" />
+
+
+                <td.com.xiaoheixiong.views.MyGridview
+                    android:id="@+id/gv_pic_more"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="25dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:horizontalSpacing="5dp"
+                    android:listSelector="@color/transparent"
+                    android:numColumns="4"
+                    android:scrollbars="none"
+                    android:verticalSpacing="15dp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="13dp"
+                    android:text="卡券描述"
+                    android:textColor="@color/tv_color9"
+                    android:textSize="@dimen/size_15" />
+
+                <EditText
+                    android:id="@+id/ed_card_detal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginRight="10dp"
+                    android:background="@null"
+                    android:gravity="center|left|top"
+                    android:hint="请输入描述信息"
+                    android:maxLength="50"
+                    android:textColor="@color/tv_color2"
+                    android:textColorHint="@color/tv_color20"
+                    android:textSize="@dimen/size_15" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_submit"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="22dp"
+                android:background="@drawable/red_btn"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_15" />
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>

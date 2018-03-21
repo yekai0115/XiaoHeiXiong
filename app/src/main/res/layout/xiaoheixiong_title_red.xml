@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@color/red"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/back_img"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="16dp"
+            android:src="@mipmap/w_back_icon" />
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="小黑熊"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <!-- <ImageView -->
+        <!-- android:layout_width="100dp" -->
+        <!-- android:layout_height="40dp" -->
+        <!-- android:layout_alignParentBottom="true" -->
+        <!-- android:layout_marginLeft="20dp" -->
+        <!-- android:layout_toRightOf="@+id/apptitle" -->
+        <!-- android:src="@drawable/app_title_e" /> -->
+
+
+        <RelativeLayout
+            android:id="@+id/title_right_rl"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/set_img"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/set_icon" />
+
+            <ImageView
+                android:id="@+id/right_img"
+                android:layout_width="22dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@id/set_img"
+                android:scaleType="fitXY"
+                android:src="@mipmap/set_icon"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/close_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="关闭"
+                android:textColor="@color/srcllbar_green"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 背景色 -->
+    <item
+        android:id="@+id/background"
+        android:layout_height="wrap_content"
+        android:drawable="@mipmap/xing_nomal_icon" />
+    <!-- 没选中状态 -->
+    <item
+        android:id="@+id/secondaryProgress"
+        android:layout_height="wrap_content"
+        android:drawable="@mipmap/xing_nomal_icon" />
+    <!-- 选中状态 -->
+    <item
+        android:id="@+android:id/progress"
+        android:layout_height="wrap_content"
+        android:drawable="@mipmap/xing_red_icon" />
+</layer-list>

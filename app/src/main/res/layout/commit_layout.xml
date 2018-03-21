@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="#ffffff"
+    android:orientation="horizontal">
+
+    <EditText
+        android:id="@+id/edit_input"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@null"
+        android:gravity="top"
+        android:hint="说你想说的..."
+        android:padding="10dp"
+        android:textColor="@color/tv_color9"
+        android:textSize="@dimen/size_15" />
+
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/line_color" />
+
+    <TextView
+        android:layout_width="65dp"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:text="发送"
+        android:textColor="@color/bg_color3"
+        android:textSize="@dimen/size_16" />
+</LinearLayout>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="170dp"
+            android:layout_height="117dp"
+            android:scaleType="fitXY" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="center|bottom"
+            android:background="@color/bg_color4"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="倒计时"
+                android:textColor="@color/tv_color8"
+                android:textSize="@dimen/size_11" />
+
+            <td.com.xiaoheixiong.views.countdown.CountdownView
+                android:id="@+id/cd_time"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="6dp"
+                app:isHideTimeBackground="false"
+                app:isShowDay="true"
+                app:isShowHour="true"
+                app:isShowMinute="true"
+                app:isShowSecond="true"
+                app:isTimeTextBold="false"
+                app:suffixGravity="center"
+                app:suffixTextColor="#000000"
+                app:suffixTextSize="12sp"
+                app:timeBgRadius="3dp"
+                app:timeTextColor="@color/white"
+                app:timeTextSize="@dimen/size_11" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        android:gravity="center|left"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:text="倒计时"
+        android:textColor="@color/tv_color9"
+        android:textSize="@dimen/size_15"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/tv_shop_name"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:drawableLeft="@drawable/home_store"
+        android:drawablePadding="4dp"
+        android:gravity="center|left"
+        android:text="倒计时"
+        android:textColor="@color/tv_color10"
+        android:textSize="@dimen/size_12" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/home_ticket1"
+            android:gravity="center"
+            android:text="劵"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_10"
+            android:visibility="gone"/>
+
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/home_ticket2"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/tv_money"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="10元"
+                android:textColor="@color/tv_color11"
+                android:textStyle="bold"
+                android:textSize="@dimen/size_16" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

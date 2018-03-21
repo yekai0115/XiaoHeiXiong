@@ -1,0 +1,191 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/xhx_Transparent"
+    android:clipChildren="false"
+    android:orientation="vertical">
+
+    <include layout="@layout/xiaoheixiong_title" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/xhx_Transparent">
+
+        <RelativeLayout
+            android:id="@+id/bx_rl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/bx_img"
+                android:layout_width="280dp"
+                android:layout_height="180dp"
+                android:src="@mipmap/bx_icon" />
+
+            <ImageView
+                android:id="@+id/out_img"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignRight="@+id/bx_img"
+                android:layout_alignTop="@+id/bx_img"
+                android:layout_marginTop="-20dp"
+                android:src="@mipmap/x_icon" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/Openbx_rl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:gravity="center"
+        android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/Openbx_img"
+                android:layout_width="280dp"
+                android:layout_height="260dp"
+                android:src="@mipmap/open_bx_icon" />
+
+            <ImageView
+                android:id="@+id/OpenOut_img"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignRight="@+id/Openbx_img"
+                android:layout_alignTop="@+id/Openbx_img"
+                android:layout_marginTop="-20dp"
+                android:src="@mipmap/x_icon" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/getQuan_rl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/Openbx_rl"
+            android:layout_toEndOf="@+id/Openbx_rl"
+           android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/quan_img"
+                android:layout_width="300dp"
+                android:layout_height="360dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/djq_bg" />
+
+            <ImageView
+                android:id="@+id/quanOut_img"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignRight="@+id/quan_img"
+                android:layout_alignTop="@+id/quan_img"
+                android:layout_marginRight="-15dp"
+                android:layout_marginTop="-20dp"
+                android:src="@mipmap/x_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="一阵金光闪过，宝箱里发现了一张优惠券！"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+               android:layout_marginTop="23dp"
+                android:layout_marginLeft="23dp"
+               />
+
+            <LinearLayout
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="55dp"
+                android:layout_marginTop="85dp"
+                android:orientation="vertical"
+                android:id="@+id/linearLayout2">
+
+
+                <TextView
+                    android:id="@+id/merchatName_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="商家店名"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/head_img"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/app_icon" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="22dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/kq_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/kqf_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text=""
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/use_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:maxLines="1"
+                            android:text=""
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/LookKQ_img"
+                    android:layout_width="200dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="80dp"
+                    android:src="@mipmap/kq_btn_icon" />
+
+                <ImageView
+                    android:id="@+id/LookDP_img"
+                    android:layout_width="200dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="19dp"
+                    android:src="@mipmap/dp_btn_icon"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>
