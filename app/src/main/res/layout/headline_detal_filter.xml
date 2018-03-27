@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="转发 34"
+                android:text="转发"
                 android:textColor="@drawable/text_color_tab2"
                 android:textSize="@dimen/size_14" />
 
@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="评论 dsd"
+                android:text="评论"
                 android:textColor="@drawable/text_color_tab2"
                 android:textSize="@dimen/size_14" />
 
@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="点赞 4"
+                android:text="点赞"
                 android:textColor="@drawable/text_color_tab2"
                 android:textSize="@dimen/size_14" />
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
     android:id="@+id/relat"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="#00000000"
+    android:background="#36000000"
     android:gravity="center_horizontal">
 
     <LinearLayout
@@ -11,46 +11,47 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/applin"
+        android:background="@color/white"
         android:gravity="center_horizontal"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/btn_take_photo"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="20dip"
-            android:layout_marginRight="20dip"
-            android:layout_marginTop="10dip"
             android:background="@color/white"
             android:text="拍照"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_color" />
 
         <Button
             android:id="@+id/btn_pick_photo"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="20dip"
-            android:layout_marginRight="20dip"
             android:layout_marginTop="8dip"
             android:background="@color/white"
             android:text="从相册选择"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#36000000" />
 
         <Button
             android:id="@+id/btn_cancel"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:layout_marginBottom="15dip"
-            android:layout_marginLeft="20dip"
-            android:layout_marginRight="20dip"
-            android:layout_marginTop="16dip"
             android:background="@color/white"
             android:text="取消"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="18sp" />
     </LinearLayout>
 
 </RelativeLayout>

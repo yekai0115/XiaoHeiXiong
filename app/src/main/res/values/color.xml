@@ -218,6 +218,7 @@
     <color name="bg_color2">#ebebeb</color>
     <color name="bg_color3">#ff0000</color>
     <color name="line_color">#dcdcdc</color>
+    <color name="line_color3">#e5e5e5</color>
     <color name="bg_blank_color">#f5f5f5</color>
     <color name="search_bg_gray">#f0f0f0</color>
     <color name="tv_color8">#151515</color>
@@ -238,7 +239,10 @@
     <color name="tv_color23">#a1a1a1</color>
     <color name="tv_color24">#f9f9f9</color>
     <color name="tv_color25">#f6f6f6</color>
-    <color name="bg_color4">#88ffffff</color>
+    <color name="tv_color26">#a6a6a6</color>
+    <color name="tv_color27">#484747</color>
+    <color name="tv_color28">#868686</color>
+    <color name="bg_color4">#D9ffffff</color>
     <color name="bg_color5">#FFF0F0F0</color>
     <color name="bg_color6">#ffc1c1</color>
     <color name="bg_color7">#FFFDEBEB</color>
@@ -248,6 +252,7 @@
     <color name="bg_color11">#ff5a00</color>
     <color name="bg_color12">#ff0000</color>
     <color name="bg_color13">#36000000</color>
+    <color name="bg_color14">#e8bc38</color>
     <color name="text_hint_color">#cecece</color>
     <color name="dialog_personal_divider">#d6d6d6</color>
     <color name="tab_line_color">#3c9bff</color>

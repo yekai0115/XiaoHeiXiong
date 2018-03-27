@@ -1,7 +1,8 @@
 /**
-  * Copyright 2018 bejson.com 
-  */
+ * Copyright 2018 bejson.com
+ */
 package td.com.xiaoheixiong.beans;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -14,62 +15,58 @@ import java.util.List;
  */
 public class TouTiaoBean implements Serializable {
 
-    private int id;
-    private String createBy;
-    private long createDate;
-    private String updateBy;
-    private long updateDate;
-    private boolean delFlag;
-    private String mercId;
-    private String mercName;
+
+    private String id;
+    private String create_by;
+    private String create_time;
+    private String update_date;
+    private String del_flag;
+    private String merc_id;
+    private String merc_name;
     private String description;
     private String images;
-    private int basePraise;
-    private int realPraise;
-    private int status;
-    private String lngLat;
-    private String locationDesc;
-    private int noPraise;
-    private List<String> imageList;
-    private String mercImg;
-    private String identityDesc;
-    private String publishTime;
-    private String statusName;
-    private String firstImg;
+    private String headImg;
+    private String replyNum;//    回复数量
+    private String  forwardNum;//转发数量
+    private String  nickName;
+    private String base_praise;
+    private String real_praise;
+    private String status;
+    private String location_desc;
+    private String lng;
+    private String lat;
 
     public boolean isShowAll = false;
 
+    public boolean isPraise = false;
 
-    public int getId() {
+
+    public String getId() {
         return id;
     }
 
-    public String getCreateBy() {
-        return createBy;
+    public String getCreate_by() {
+        return create_by;
     }
 
-    public long getCreateDate() {
-        return createDate;
+    public String getCreate_time() {
+        return create_time;
     }
 
-    public String getUpdateBy() {
-        return updateBy;
+    public String getUpdate_date() {
+        return update_date;
     }
 
-    public long getUpdateDate() {
-        return updateDate;
+    public String getDel_flag() {
+        return del_flag;
     }
 
-    public boolean isDelFlag() {
-        return delFlag;
+    public String getMerc_id() {
+        return merc_id;
     }
 
-    public String getMercId() {
-        return mercId;
-    }
-
-    public String getMercName() {
-        return mercName;
+    public String getMerc_name() {
+        return merc_name;
     }
 
     public String getDescription() {
@@ -80,51 +77,60 @@ public class TouTiaoBean implements Serializable {
         return images;
     }
 
-    public int getBasePraise() {
-        return basePraise;
+    public String getBase_praise() {
+        return base_praise;
     }
 
-    public int getRealPraise() {
-        return realPraise;
+    public String getReal_praise() {
+        return real_praise;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public String getLngLat() {
-        return lngLat;
+    public String getLocation_desc() {
+        return location_desc;
     }
 
-    public String getLocationDesc() {
-        return locationDesc;
+    public String getLng() {
+        return lng;
     }
 
-    public int getNoPraise() {
-        return noPraise;
+    public String getLat() {
+        return lat;
     }
 
-    public List<String> getImageList() {
-        return imageList;
+    public boolean isShowAll() {
+        return isShowAll;
     }
 
-    public String getMercImg() {
-        return mercImg;
+    public String getHeadImg() {
+        return headImg;
     }
 
-    public String getIdentityDesc() {
-        return identityDesc;
+    public String getReplyNum() {
+        return replyNum;
     }
 
-    public String getPublishTime() {
-        return publishTime;
+    public String getForwardNum() {
+        return forwardNum;
     }
 
-    public String getStatusName() {
-        return statusName;
+    public String getNickName() {
+        return nickName;
     }
 
-    public String getFirstImg() {
-        return firstImg;
+
+    public boolean isPraise() {
+        return isPraise;
+    }
+
+    public void setPraise(boolean praise) {
+        isPraise = praise;
+    }
+
+    public void setReal_praise(String real_praise) {
+        this.real_praise = real_praise;
     }
 }

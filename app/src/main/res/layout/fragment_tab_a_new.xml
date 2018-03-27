@@ -67,6 +67,7 @@
                                 android:drawablePadding="5dp"
                                 android:gravity="center"
                                 android:hint="搜 索"
+                                android:imeOptions="actionSearch"
                                 android:paddingLeft="60dp"
                                 android:paddingRight="60dp"
                                 android:textColorHint="@color/tv_color4"
@@ -90,6 +91,16 @@
                             android:layout_height="wrap_content" />
 
 
+                        <td.com.xiaoheixiong.views.viewpager.MaterialIndicator
+                            android:id="@+id/bannerIndicator"
+                            style="@style/MaterialIndicator.Demo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center|bottom"
+                            android:layout_marginBottom="15dp" />
+
+
+
                         <TextView
                             android:id="@+id/indicator"
                             android:layout_width="wrap_content"
@@ -99,9 +110,9 @@
                             android:layout_marginRight="10dp"
                             android:background="@drawable/guide_shape"
                             android:gravity="center"
-                            android:text="@string/viewpager_indicator"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/size_12" />
+                            android:textSize="@dimen/size_12"
+                            android:visibility="gone"/>
 
 
                     </FrameLayout>
@@ -110,6 +121,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:background="@color/white">
+
 
                         <android.support.v4.view.ViewPager
                             android:id="@+id/viewpager"
@@ -162,7 +174,7 @@
                             android:text="更多"
                             android:textColor="@color/tv_color15"
                             android:textSize="@dimen/size_14"
-                            android:visibility="invisible"/>
+                            android:visibility="invisible" />
                     </LinearLayout>
 
                     <View
@@ -222,7 +234,7 @@
                             android:text="更多"
                             android:textColor="@color/tv_color15"
                             android:textSize="@dimen/size_14"
-                            android:visibility="invisible"/>
+                            android:visibility="invisible" />
                     </LinearLayout>
 
                     <View
@@ -244,7 +256,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="15dp"
-                        android:background="@color/white"/>
+                        android:background="@color/white" />
 
                     <TextView
                         android:id="@+id/tv_youyou"
@@ -254,7 +266,6 @@
                         android:background="@color/white"
                         android:drawableLeft="@drawable/home_merchant"
                         android:drawablePadding="6dp"
-                        android:drawableRight="@drawable/home_more"
                         android:gravity="center|left"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"

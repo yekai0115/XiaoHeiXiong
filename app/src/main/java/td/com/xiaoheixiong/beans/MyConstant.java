@@ -1,6 +1,8 @@
 package td.com.xiaoheixiong.beans;
 
 
+import android.os.Environment;
+
 /**
  * 常量
  */
@@ -24,5 +26,12 @@ public class MyConstant {
 
     public static final String ALI_PUBLIC_URL = "https://litterblackbear-public-v1.oss-cn-shenzhen.aliyuncs.com/";
 
+
+    /**
+     * 本应用的文件
+     */
+    public final static String APP_HOME_PATH = Environment.getExternalStorageDirectory() + "/xhx/";
+
+    public static final String SHARE_IMAGE_PATH = APP_HOME_PATH + "app_icon.jpg";
 
 }

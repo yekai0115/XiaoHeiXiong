@@ -28,6 +28,7 @@ import java.util.List;
 import td.com.xiaoheixiong.R;
 import td.com.xiaoheixiong.Utils.GsonUtil;
 import td.com.xiaoheixiong.Utils.MyCacheUtil;
+import td.com.xiaoheixiong.activity.AddMarkingActivity;
 import td.com.xiaoheixiong.adapter.MarkingAdapter;
 import td.com.xiaoheixiong.beans.TuanTuan.TTBean;
 import td.com.xiaoheixiong.beans.TuanTuan.TTDetalBean;
@@ -49,7 +50,7 @@ public class MarkingFrament extends BaseLazyFragment implements PullLayout.OnRef
 
     private View mainView;
     private Context context;
-    private int position;
+    private int mPosition;
     private ListView lv_marking;
     private PullLayout refresh_view;
 
@@ -87,7 +88,7 @@ public class MarkingFrament extends BaseLazyFragment implements PullLayout.OnRef
         context = getActivity();
         EventBus.getDefault().register(this);
         mercId = MyCacheUtil.getshared(getActivity()).getString("MERCNUM", "");
-        position = getArguments().getInt("position");
+        mPosition = getArguments().getInt("position");
     }
 
     @Override
@@ -98,7 +99,7 @@ public class MarkingFrament extends BaseLazyFragment implements PullLayout.OnRef
             setWidget();
             refresh_view.setOnRefreshListener(this);
             context = getActivity();
-            adapter = new MarkingAdapter(getActivity(), ttBeanList, this,position);
+            adapter = new MarkingAdapter(getActivity(), ttBeanList, this,mPosition);
             lv_marking.setAdapter(adapter);
             isPrepared = true;
             lazyLoad();
@@ -116,7 +117,6 @@ public class MarkingFrament extends BaseLazyFragment implements PullLayout.OnRef
     private void setWidget() {
         lv_marking = (MyListView) mainView.findViewById(R.id.lv_marking);
         refresh_view = (PullLayout) mainView.findViewById(R.id.refresh_view);
-
     }
 
     @Override
@@ -162,9 +162,9 @@ public class MarkingFrament extends BaseLazyFragment implements PullLayout.OnRef
         maps.put("size", 10);
         maps.put("page", pageNum);
         String url="";
-        if(position==1){
+        if(mPosition==1){
             url=HttpUrls.XHX_tuantuan_list;
-        }else if(position==2){
+        }else if(mPosition==2){
             url=HttpUrls.XHX_miaomiao_list;
         }
 
@@ -192,7 +192,7 @@ public class MarkingFrament extends BaseLazyFragment implements PullLayout.OnRef
                             adapter.updateListview(ttBeanList);
                             setListviewHeight(lv_marking);
                         } else {
-
+                            Toast.makeText(getContext(), oJSON.getString("RSPMSG"), Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -249,6 +249,10 @@ public class MarkingFrament extends BaseLazyFragment implements PullLayout.OnRef
                 showConfirmReceiptDialog(id);
                 break;
             case R.id.tv_detal://查看详情
+                intent=new Intent(getActivity(), AddMarkingActivity.class);
+                intent.putExtra("ttBean",ttBean);
+                intent.putExtra("position",mPosition);
+                startActivity(intent);
                 break;
             default:
                 break;
@@ -305,9 +309,9 @@ public class MarkingFrament extends BaseLazyFragment implements PullLayout.OnRef
         HashMap<String, Object> maps = new HashMap<>();
         maps.put("id", id);
         String url = "";
-        if (position == 1) {
+        if (mPosition == 1) {
             url = HttpUrls.XHX_delete_tuantuan;
-        } else if (position == 2) {//秒秒
+        } else if (mPosition == 2) {//秒秒
             url = HttpUrls.XHX_delete_miaomiao;
         }
         OkHttpClientManager.getInstance(context).requestAsyn(url, OkHttpClientManager.TYPE_GET,

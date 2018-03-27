@@ -7,15 +7,24 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import td.com.xiaoheixiong.R;
+import td.com.xiaoheixiong.Utils.EmojiUtil;
+import td.com.xiaoheixiong.Utils.GlideCircleTransform;
+import td.com.xiaoheixiong.Utils.MyCacheUtil;
+import td.com.xiaoheixiong.beans.HeadLineDetal.CommentBean;
 import td.com.xiaoheixiong.views.countdown.CountdownView;
 
 public class HeadLindDetalAdapter extends BaseAdapter {
 
 	private Context mContext;
-	private List<String> list = new ArrayList<String>();
+	private List<CommentBean> list = new ArrayList<CommentBean>();
 	public HeadLindDetalAdapter() {
 		super();
 	}
@@ -24,12 +33,12 @@ public class HeadLindDetalAdapter extends BaseAdapter {
  * 获取列表数据
  * @param list
  */
-	public void setList(List<String> list){
+	public void setList(List<CommentBean> list){
 		this.list = list;
 		this.notifyDataSetChanged();
 	}
 
-	public HeadLindDetalAdapter(Context mContext, List<String> list) {
+	public HeadLindDetalAdapter(Context mContext, List<CommentBean> list) {
 		super();
 		this.mContext = mContext;
 		this.list = list;
@@ -53,27 +62,46 @@ public class HeadLindDetalAdapter extends BaseAdapter {
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder holder = null;
-		String title=list.get(position);
+		CommentBean commentBean=list.get(position);
 		if(convertView==null){
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.adpter_headline_detal, null);
 			holder = new ViewHolder();
 			holder.imageView = (ImageView) convertView.findViewById(R.id.head_img);
-			holder.tv_name = (TextView) convertView.findViewById(R.id.name_tv);
-			holder.tv_shop_name = (TextView) convertView.findViewById(R.id.time_tv);
+			holder.tv_name = (TextView) convertView.findViewById(R.id.name_tv);//昵称
+			holder.tv_shop_name = (TextView) convertView.findViewById(R.id.time_tv);//内容
 
 
 			convertView.setTag(holder);
 		}else{
 			holder = (ViewHolder) convertView.getTag();
 		}
+		String nickName=commentBean.getNickName();
+		String content=EmojiUtil.getEmoji(mContext,commentBean.getComments());
+		holder.tv_shop_name.setText(content);
+		if(StringUtils.isEmpty(nickName)){
+			holder.tv_name.setText("用户***");
+		}else{
+			holder.tv_name.setText(commentBean.getNickName());
+		}
+		String headImg=commentBean.getHeadImg();
+		if(StringUtils.isEmpty(headImg)){
+			Glide.with(mContext).load(R.mipmap.app_icon)
+					.centerCrop()
+					//.override(DimenUtils.dip2px(mContext, 170), DimenUtils.dip2px(mContext, 117))
+					.transform(new GlideCircleTransform(mContext))
+					.placeholder(R.drawable.pic_nomal_loading_style)
+					.error(R.drawable.pic_nomal_loading_style)
+					.into(holder.imageView);
+		}else{
+			Glide.with(mContext).load(commentBean.getHeadImg())
+					.centerCrop()
+					//.override(DimenUtils.dip2px(mContext, 170), DimenUtils.dip2px(mContext, 117))
+					.transform(new GlideCircleTransform(mContext))
+					.placeholder(R.drawable.pic_nomal_loading_style)
+					.error(R.drawable.pic_nomal_loading_style)
+					.into(holder.imageView);
+		}
 
-		holder.tv_shop_name.setText(title);
-//		Glide.with(mContext).load(merMarkList.getMainImg())
-//				.centerCrop()
-//				.override(DimenUtils.dip2px(mContext, 170), DimenUtils.dip2px(mContext, 117))
-//				.placeholder(R.drawable.pic_nomal_loading_style)
-//				.error(R.drawable.pic_nomal_loading_style)
-//				.into(holder.imageView);
 		return convertView;
 	}
 

@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/pl_img"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="7dp"
             android:layout_toRightOf="@id/pl_img"
             android:text="昵称"
             android:textSize="16sp" />
@@ -62,7 +62,7 @@
                 android:id="@+id/xing_img1"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="6dp"
                 android:scaleType="fitXY"
                 android:src="@mipmap/xing_press_icon" />
 
@@ -107,9 +107,8 @@
         android:id="@+id/content_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="37dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
         android:maxLines="2"
         android:text="pinglun" />
 

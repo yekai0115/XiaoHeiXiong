@@ -5,7 +5,32 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <include layout="@layout/xiaoheixiong_title_red" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/bg_color14">
+
+        <ImageView
+            android:id="@+id/back_img"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="16dp"
+            android:src="@drawable/map_return" />
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="付款"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_17" />
+    </RelativeLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,12 +38,77 @@
         android:background="@color/white">
 
         <ImageView
-            android:id="@+id/code_img"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:scaleType="fitXY"
+            android:id="@+id/code_share_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            />
+            android:scaleType="fitXY" />
+
+        <LinearLayout
+            android:id="@+id/ll_code"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_color14"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="10.5dp"
+                android:src="@drawable/img_store" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="24dp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_17" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="360dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginRight="17dp"
+                android:background="@drawable/dialog_bg">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="66dp"
+                    android:layout_gravity="center|top"
+                    android:gravity="center"
+                    android:text="扫码二维码码支付"
+                    android:textColor="@color/tv_color27"
+                    android:textSize="@dimen/size_17" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="66dp"
+                    android:background="@color/line_color3" />
+
+                <ImageView
+                    android:id="@+id/code_img"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="25dp"
+                    android:scaleType="fitXY" />
+
+                <TextView
+                    android:id="@+id/tv_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="66dp"
+                    android:layout_gravity="center|bottom"
+                    android:gravity="center"
+                    android:text="点击二维码码保存"
+                    android:textColor="@color/tv_color28"
+                    android:textSize="@dimen/size_14" />
+            </FrameLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/saveImg_tv"
@@ -27,10 +117,11 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="20dp"
+            android:background="@drawable/btn_stroke"
             android:gravity="center"
             android:text="保存二维码"
             android:textSize="16sp"
-            android:background="@drawable/btn_stroke" />
+            android:visibility="gone" />
 
     </RelativeLayout>
 

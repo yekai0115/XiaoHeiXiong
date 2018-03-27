@@ -81,10 +81,10 @@ public class AppraiseInfoAdapter extends RecyclerView.Adapter<AppraiseInfoAdapte
             } else {
                 glideRequest.load(R.mipmap.app_icon).transform(new GlideCircleTransform(mContext)).into(viewHolder.pl_img);// 设置图片圆角
             }
-            if (datas.get(position).get("mercName") != null) {
+            if (StringUtils.isEmpty((String)datas.get(position).get("mercName"))) {
                 viewHolder.name_tv.setText(datas.get(position).get("mercName") + "");
             } else {
-                viewHolder.name_tv.setText("匿名用户");
+                viewHolder.name_tv.setText("用户***");
             }
 
             viewHolder.time_tv.setText(datas.get(position).get("publishTime") + "");

@@ -20,14 +20,20 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import td.com.xiaoheixiong.R;
+import td.com.xiaoheixiong.Utils.EmojiUtil;
 import td.com.xiaoheixiong.Utils.GsonUtil;
 import td.com.xiaoheixiong.Utils.MyCacheUtil;
+import td.com.xiaoheixiong.activity.AddHeadLineActivity;
 import td.com.xiaoheixiong.activity.HeadLineDetalctivity;
+import td.com.xiaoheixiong.activity.LoginActivity;
+import td.com.xiaoheixiong.activity.TransmitHeadlinActivity;
 import td.com.xiaoheixiong.adapter.MainAdapter;
 import td.com.xiaoheixiong.adapter.NineGridTestAdapter;
 import td.com.xiaoheixiong.beans.Detail;
@@ -48,7 +54,7 @@ public class TabB2Fragment extends BaseFragment implements PullLayout.OnRefreshL
 
 
     private TextView title_tv;
-    private ImageView back_img, right_img;
+    private ImageView back_img, right_img, set_img;
     private RelativeLayout title_right_rl;
     private View view;
     private PullLayout refresh_view;
@@ -56,7 +62,7 @@ public class TabB2Fragment extends BaseFragment implements PullLayout.OnRefreshL
 
     private NineGridTestAdapter adapter;
     private String pageSize = "10", MERCNUM;
-    private int pageNum = 1;
+    private int pageNum = 0;
     private int pages;
 
 
@@ -82,8 +88,10 @@ public class TabB2Fragment extends BaseFragment implements PullLayout.OnRefreshL
         back_img = (ImageView) view.findViewById(R.id.back_img);
         back_img.setVisibility(View.GONE);
         title_right_rl = (RelativeLayout) view.findViewById(R.id.title_right_rl);
-        right_img = (ImageView) view.findViewById(R.id.right_img);
-        title_right_rl.setVisibility(View.GONE);
+        right_img = (ImageView) view.findViewById(R.id.right_img2);
+        set_img = (ImageView) view.findViewById(R.id.set_img);
+        right_img.setVisibility(View.VISIBLE);
+        set_img.setVisibility(View.GONE);
         title_tv.setText("头条");
         refresh_view = (PullLayout) view.findViewById(R.id.refresh_view);
         refresh_view.setOnRefreshListener(this);
@@ -93,37 +101,48 @@ public class TabB2Fragment extends BaseFragment implements PullLayout.OnRefreshL
         adapter.setList(touTiaoBeanList);
         lv_toutiao.setAdapter(adapter);
 
+        right_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), AddHeadLineActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void getdata(final int state) {
         showLoadingDialog("...");
         HashMap<String, Object> maps = new HashMap<>();
-        // maps.put("mercId", MERCNUM);
-        maps.put("mercId", "");
-        maps.put("pageNum", pageNum);
-        maps.put("pageSize", pageSize);
-
+        maps.put("page", pageNum);
+        maps.put("size", pageSize);
+        maps.put("checkPraiseId", MERCNUM);
         OkHttpClientManager.getInstance(getActivity()).requestAsyn(HttpUrls.XHX_toutiao, OkHttpClientManager.TYPE_POST_JSON, maps,
                 OkHttpClientManager.HOST_javaMpay, new OkHttpClientManager.ReqCallBack() {
                     @Override
                     public void onReqSuccess(Object result) {
                         loadingDialogWhole.dismiss();
-
+                        if (state == 1) {
+                            touTiaoBeanList.clear();
+                        } else if (state == 2) {
+                            touTiaoBeanList.clear();
+                            refresh_view.refreshFinish(PullLayout.SUCCEED);
+                        } else {
+                            refresh_view.loadmoreFinish(PullLayout.SUCCEED);
+                        }
                         JSONObject oJSON = JSON.parseObject(result + "");
                         if (oJSON.get("RSPCOD").equals("000000")) {
-                            JsonRootBean jsonRootBean = GsonUtil.GsonToBean(oJSON.toString(), JsonRootBean.class);
-                            Detail detail = jsonRootBean.getDetail();
-                            List<TouTiaoBean> list = detail.getList();
-                            pages = detail.getPages();
-                            if (state == 1) {
-                                touTiaoBeanList.clear();
-                            } else if (state == 2) {
-                                touTiaoBeanList.clear();
-                                refresh_view.refreshFinish(PullLayout.SUCCEED);
-                            } else {
-                                refresh_view.loadmoreFinish(PullLayout.SUCCEED);
+                            try {
+                                JsonRootBean jsonRootBean = GsonUtil.GsonToBean(oJSON.toString(), JsonRootBean.class);
+                                Detail detail = jsonRootBean.getDetail();
+                                List<TouTiaoBean> list = detail.getLists();
+                                pages = detail.getTotalPage();
+                                touTiaoBeanList.addAll(list);
+                            } catch (Exception e) {
+
                             }
-                            touTiaoBeanList.addAll(list);
+
+                        } else {
+                            Toast.makeText(getContext(), oJSON.getString("RSPDATA"), Toast.LENGTH_SHORT).show();
                         }
                         adapter.updataListView(touTiaoBeanList);
                     }
@@ -150,7 +169,7 @@ public class TabB2Fragment extends BaseFragment implements PullLayout.OnRefreshL
     @Override
     public void onRefresh(PullLayout pullToRefreshLayout) {
 
-        pageNum = 1;
+        pageNum = 0;
         getdata(2);
     }
 
@@ -168,82 +187,193 @@ public class TabB2Fragment extends BaseFragment implements PullLayout.OnRefreshL
 
 
     @Override
-    public void onClick(View item, View widget, int position, int which) {
-        TouTiaoBean bean = touTiaoBeanList.get(position);
-        final int realPraise = bean.getRealPraise();
+    public void onClick(View item, View widget, final int position, int which) {
+        final TouTiaoBean bean = touTiaoBeanList.get(position);
+        final String realPraise = bean.getReal_praise() == null ? "0" : bean.getReal_praise();
         final String id = bean.getId() + "";
+        String mercImg = bean.getHeadImg();//头像
+        String mercName = bean.getNickName();//商户名/昵称
+        String imageList = bean.getImages();
+        String description = bean.getDescription();
+        String create_time = bean.getCreate_time();
+        String location_desc = bean.getLocation_desc();
         final TextView zanNum_tv = (TextView) item.findViewById(R.id.zanNum_tv);
         final ImageView zan_img = (ImageView) view.findViewById(R.id.zan_img);
         final LinearLayout zan_ll = (LinearLayout) view.findViewById(R.id.zan_ll);
+        String MOBILE = MyCacheUtil.getshared(getActivity()).getString("PHONENUMBER", "");
+        Intent intent;
         switch (which) {
-            case R.id.tv_evaluate:
-                Dialog bottomDialog = new Dialog(getActivity(), R.style.BottomDialog);
-                View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.commit_layout, null);
-                bottomDialog.setContentView(contentView);
-                ViewGroup.LayoutParams layoutParams = contentView.getLayoutParams();
-                layoutParams.width = getResources().getDisplayMetrics().widthPixels;
-                contentView.setLayoutParams(layoutParams);
-                bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
-                bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
-
-                final EditText editText = (EditText) bottomDialog.findViewById(R.id.edit_input);
-                editText.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.showSoftInput(editText, 0);
-                    }
-                });
-                bottomDialog.setCanceledOnTouchOutside(true);
-                bottomDialog.setCancelable(true);
-                bottomDialog.show();
-                break;
-            case R.id.tv_zhuanfa://转发
-
-                String mercImg=bean.getMercImg();//头像
-                String mercName=bean.getMercName();
-                List<String> imageList=bean.getImageList();
-                String description= bean.getDescription();
-
-                Intent intent=new Intent(getActivity(), HeadLineDetalctivity.class);
-                intent.putExtra("mercImg",mercImg);
-                intent.putExtra("mercName",mercName);
-                intent.putStringArrayListExtra("imageList",(ArrayList<String>) imageList);
-                intent.putExtra("description",description);
+            case R.id.ll_detal://详情
+                intent = new Intent(getActivity(), HeadLineDetalctivity.class);
+                intent.putExtra("id", id);
+                intent.putExtra("mercImg", mercImg);
+                intent.putExtra("mercName", mercName);
+                intent.putExtra("create_time", create_time);
+                intent.putExtra("imageList", imageList);
+                intent.putExtra("description", description);
+                intent.putExtra("location_desc", location_desc);
                 startActivity(intent);
                 break;
+            case R.id.tv_evaluate://评论
+                if (StringUtils.isEmpty(MOBILE)) {
+                    intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                } else {
+                    final Dialog bottomDialog = new Dialog(getActivity(), R.style.BottomDialog);
+                    View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.commit_layout, null);
+                    bottomDialog.setContentView(contentView);
+                    ViewGroup.LayoutParams layoutParams = contentView.getLayoutParams();
+                    layoutParams.width = getResources().getDisplayMetrics().widthPixels;
+                    contentView.setLayoutParams(layoutParams);
+                    bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
+                    bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+
+                    final EditText editText = (EditText) bottomDialog.findViewById(R.id.edit_input);
+                    final TextView tv_evaluate = (TextView) bottomDialog.findViewById(R.id.tv_evaluate);
+                    editText.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.showSoftInput(editText, 0);
+                        }
+                    });
+                    editText.setFocusable(true);
+                    editText.setFocusableInTouchMode(true);
+                    editText.requestFocus();
+                    tv_evaluate.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String content = editText.getText().toString();
+                            if (StringUtils.isEmpty(content)) {
+                                Toast.makeText(getContext(), "请输入评论内容", Toast.LENGTH_SHORT).show();
+                            } else {
+                                bottomDialog.dismiss();
+                                String text=EmojiUtil.getString(content);
+                                evaulate(text, id, bean);
+                            }
+                        }
+                    });
+                    bottomDialog.setCanceledOnTouchOutside(true);
+                    bottomDialog.setCancelable(true);
+                    bottomDialog.show();
+                }
+                break;
+            case R.id.tv_zhuanfa://转发
+                if (StringUtils.isEmpty(MOBILE)) {
+                    intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                } else {
+                    intent = new Intent(getActivity(), TransmitHeadlinActivity.class);
+                    intent.putExtra("mercImg", mercImg);
+                    intent.putExtra("mercName", mercName);
+                    intent.putExtra("imageList", imageList);
+                    intent.putExtra("description", description);
+                    startActivity(intent);
+                }
+                break;
             case R.id.zan_ll:
-                String mercId = MyCacheUtil.getshared(getContext()).getString("MERCNUM", "");
-                HashMap<String, Object> mapss = new HashMap<>();
-                //  mercId //当前登录的用户ID, 例如：M0081997,
-                //         id //被评论的头条ID
-                mapss.put("id", id);
-                mapss.put("mercId", mercId);
+                if (StringUtils.isEmpty(MOBILE)) {
+                    intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                } else {
+                    String mercId = MyCacheUtil.getshared(getContext()).getString("MERCNUM", "");
+                    HashMap<String, Object> mapss = new HashMap<>();
+                    //  mercId //当前登录的用户ID, 例如：M0081997,
+                    //         id //被评论的头条ID
+                    mapss.put("headlineId", id);
+                    mapss.put("mercId", mercId);
+                    mapss.put("state", 1);
 
-                OkHttpClientManager.getInstance(getContext()).requestAsyn(HttpUrls.XHX_Zan, OkHttpClientManager.TYPE_GET,
-                        mapss, OkHttpClientManager.HOST_javaMpay, new OkHttpClientManager.ReqCallBack() {
+                    OkHttpClientManager.getInstance(getContext()).requestAsyn(HttpUrls.XHX_Zan, OkHttpClientManager.TYPE_GET,
+                            mapss, OkHttpClientManager.HOST_javaMpay, new OkHttpClientManager.ReqCallBack() {
 
-                            @Override
-                            public void onReqSuccess(Object result) {
-                                // TODO Auto-generated method stub
-                                Log.e("result", result + "");
-                                JSONObject jsonObj = new JSONObject().parseObject(result + "");
-                                int Rzan = realPraise + 1;// 最新点赞数
-                                zanNum_tv.setText(Rzan + "");
-                                zan_img.setImageResource(R.drawable.headline_praise1);
-                                zan_ll.setEnabled(false);
-                            }
+                                @Override
+                                public void onReqSuccess(Object result) {
+                                    // TODO Auto-generated method stub
+                                    Log.e("result", result + "");
+                                    JSONObject jsonObj = new JSONObject().parseObject(result + "");
+                                    int Rzan = Integer.valueOf(realPraise) + 1;// 最新点赞数
 
-                            @Override
-                            public void onReqFailed(String errorMsg) {
-                                // TODO Auto-generated method stub
-                            }
-                        });
+                                    if (jsonObj.get("RSPCOD").equals("000000")) {
+                                        touTiaoBeanList.get(position).setPraise(true);
+                                        touTiaoBeanList.get(position).setReal_praise(Rzan + "");
+                                    }else{
+                                        Toast.makeText(getContext(), jsonObj.getString("RSPDATA"), Toast.LENGTH_SHORT).show();
+                                    }
+                                    adapter.notifyDataSetChanged();
 
+                                }
+
+                                @Override
+                                public void onReqFailed(String errorMsg) {
+                                    Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
                 break;
 
         }
 
     }
+
+    /**
+     * 评论
+     *
+     * @param content
+     * @param id
+     */
+    private void evaulate(String content, final String id, final TouTiaoBean bean) {
+        HashMap<String, Object> mapss = new HashMap<>();
+        //  mercId //当前登录的用户ID, 例如：M0081997,
+        //         id //被评论的头条ID
+        mapss.put("headline_id", id);
+        mapss.put("mer_id", MERCNUM);
+        mapss.put("comments", content);
+        OkHttpClientManager.getInstance(getContext()).requestAsyn(HttpUrls.XHX_evaulate, OkHttpClientManager.TYPE_GET,
+                mapss, OkHttpClientManager.HOST_javaMpay, new OkHttpClientManager.ReqCallBack() {
+
+                    @Override
+                    public void onReqSuccess(Object result) {
+                        // TODO Auto-generated method stub
+                        Log.e("result", result + "");
+                        JSONObject jsonObj = new JSONObject().parseObject(result + "");
+                        try {
+                            if (jsonObj.get("RSPCOD").equals("000000")) {
+                                Toast.makeText(getContext(), jsonObj.getString("RSPMSG"), Toast.LENGTH_SHORT).show();
+                                getdata(2);
+
+                                String mercImg = bean.getHeadImg();//头像
+                                String mercName = bean.getNickName();//商户名/昵称
+                                String imageList = bean.getImages();
+                                String description = bean.getDescription();
+                                String create_time = bean.getCreate_time();
+                                String location_desc = bean.getLocation_desc();
+
+                                Intent intent = new Intent(getActivity(), HeadLineDetalctivity.class);
+                                intent.putExtra("id", id);
+                                intent.putExtra("mercImg", mercImg);
+                                intent.putExtra("mercName", mercName);
+                                intent.putExtra("create_time", create_time);
+                                intent.putExtra("imageList", imageList);
+                                intent.putExtra("description", description);
+                                intent.putExtra("location_desc", location_desc);
+                                startActivity(intent);
+
+
+                            }
+                            Toast.makeText(getContext(), jsonObj.getString("RSPMSG"), Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onReqFailed(String errorMsg) {
+                        Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
 
 }

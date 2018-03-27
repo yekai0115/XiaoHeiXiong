@@ -49,7 +49,7 @@ import td.com.xiaoheixiong.views.RecyclerViewItemTouchListener;
 
 public class MechatDetailsActivity extends BaseActivity {
 
-    String mercId, orgcode;
+    String mercId, orgcode,imgUrl;
     @Bind(R.id.back_img)
     ImageView backImg;
     @Bind(R.id.title_tv)
@@ -110,7 +110,6 @@ public class MechatDetailsActivity extends BaseActivity {
     private ShowShopAdapter ShowAdapter;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,6 +121,7 @@ public class MechatDetailsActivity extends BaseActivity {
         Intent it = getIntent();
         mercId = it.getStringExtra("mercId");
         orgcode = it.getStringExtra("orgcode");
+        imgUrl= it.getStringExtra("imgUrl");
         Log.e("", mercId + "   " + orgcode);
         initview();
         getdata();
@@ -188,7 +188,6 @@ public class MechatDetailsActivity extends BaseActivity {
                         inputData();
 
                     }
-
                     @Override
                     public void onReqFailed(String errorMsg) {
                         loadingDialogWhole.dismiss();
@@ -344,8 +343,10 @@ public class MechatDetailsActivity extends BaseActivity {
             } else {
                 glideRequest.load(R.mipmap.app_icon).transform(new GlideCircleTransform(this)).into(plImg);// 设置图片圆角
             }
-            if (Appraiselist.get(i).get("mercName") != null) {
+            if (!StringUtils.isEmpty((String)Appraiselist.get(i).get("mercName"))) {
                 nameTv.setText(Appraiselist.get(i).get("mercName") + "");
+            }else{
+                nameTv.setText("用户***");
             }
 
             timeTv.setText(Appraiselist.get(i).get("publishTime") + "");
@@ -445,11 +446,17 @@ public class MechatDetailsActivity extends BaseActivity {
         }
         glideRequest = Glide.with(this);
         mechatNameTv.setText(MapData.get("merShopName") + "");
-        if (StringUtils.isNotBlank(MapData.get("headImgUrl") + "")) {
-            glideRequest.load(R.mipmap.app_icon).transform(new GlideCircleTransform(this)).into(headImg);// 设置图片圆角
-        } else {
-            glideRequest.load(MapData.get("headImgUrl") + "").transform(new GlideCircleTransform(this)).into(headImg);// 设置图片圆角
-        }
+
+//        if (StringUtils.isEmpty(MapData.get("headImgUrl") + "")) {
+//            glideRequest.load(imgUrl).transform(new GlideCircleTransform(this)).into(headImg);// 设置图片圆角
+//        } else {
+//            glideRequest.load(MapData.get("headImgUrl") + "").transform(new GlideCircleTransform(this)).into(headImg);// 设置图片圆角
+//        }
+
+        glideRequest.load(imgUrl).transform(new GlideCircleTransform(this)).into(headImg);// 设置图片圆角
+
+
+
         String caiData = MapData.get("labelName") + "";
         if (StringUtils.isNotBlank(caiData)) {
             String[] caidatas = new String[3];
@@ -471,14 +478,15 @@ public class MechatDetailsActivity extends BaseActivity {
             for (int i = 0; i < caidatas.length; i++) {
                 TextView text = new TextView(this);
                 text.setText(caidatas[i]);
-                text.setBackgroundColor(getResources().getColor(R.color.xhx_text_blue));
-                text.setPadding(5, 5, 5, 5);
+                text.setBackground(getResources().getDrawable(R.drawable.bg_style5));
+             //   text.setBackgroundColor(getResources().getColor(R.color.xhx_text_blue));
+                text.setPadding(7, 5, 7, 5);
                 //相对位置
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 lp.setMargins(10, 0, 0, 0);
                 text.setLayoutParams(lp);
-                text.setTextSize(14);
-                text.setTextColor(getResources().getColor(R.color.white));
+                text.setTextSize(12);
+                text.setTextColor(getResources().getColor(R.color.tv_color14));
                 caipuLl.addView(text);
             }
         }

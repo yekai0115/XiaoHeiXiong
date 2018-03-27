@@ -102,7 +102,7 @@
     </style>
     <!-- banner轮播圆点 -->
     <style name="MaterialIndicator.Demo">
-        <item name="mi_indicatorColor">@color/white</item>
+        <item name="mi_indicatorColor">@color/red</item>
         <item name="mi_indicatorPadding">24dp</item>
         <item name="mi_indicatorRadius">4dp</item>
     </style>

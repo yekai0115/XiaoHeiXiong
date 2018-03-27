@@ -1,7 +1,8 @@
 /**
-  * Copyright 2018 bejson.com 
-  */
+ * Copyright 2018 bejson.com
+ */
 package td.com.xiaoheixiong.beans;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -11,96 +12,33 @@ import java.util.List;
  * @author bejson.com (i@bejson.com)
  * @website http://www.bejson.com/java2pojo/
  */
-public class Detail implements Serializable{
+public class Detail implements Serializable {
 
-    private int pageNum;
-    private int pageSize;
-    private int size;
-    private int startRow;
-    private int endRow;
-    private int total;
-    private int pages;
-    private List<TouTiaoBean> list;
-    private int firstPage;
-    private int prePage;
-    private int nextPage;
-    private int lastPage;
-    private boolean isFirstPage;
-    private boolean isLastPage;
-    private boolean hasPreviousPage;
-    private boolean hasNextPage;
-    private int navigatePages;
-    private List<Integer> navigatepageNums;
 
-    public int getPageNum() {
-        return pageNum;
+    private int totalPage;//总页数
+    private int currentPage;//当前页数
+    private int size;//页数大小
+
+    private List<TouTiaoBean> lists;
+
+
+    public int getTotalPage() {
+        return totalPage;
     }
 
-    public int getPageSize() {
-        return pageSize;
+    public int getCurrentPage() {
+        return currentPage;
     }
 
     public int getSize() {
         return size;
     }
 
-    public int getStartRow() {
-        return startRow;
+    public List<TouTiaoBean> getLists() {
+        return lists;
     }
 
-    public int getEndRow() {
-        return endRow;
-    }
 
-    public int getTotal() {
-        return total;
-    }
 
-    public int getPages() {
-        return pages;
-    }
 
-    public List<TouTiaoBean> getList() {
-        return list;
-    }
-
-    public int getFirstPage() {
-        return firstPage;
-    }
-
-    public int getPrePage() {
-        return prePage;
-    }
-
-    public int getNextPage() {
-        return nextPage;
-    }
-
-    public int getLastPage() {
-        return lastPage;
-    }
-
-    public boolean isFirstPage() {
-        return isFirstPage;
-    }
-
-    public boolean isLastPage() {
-        return isLastPage;
-    }
-
-    public boolean isHasPreviousPage() {
-        return hasPreviousPage;
-    }
-
-    public boolean isHasNextPage() {
-        return hasNextPage;
-    }
-
-    public int getNavigatePages() {
-        return navigatePages;
-    }
-
-    public List<Integer> getNavigatepageNums() {
-        return navigatepageNums;
-    }
 }

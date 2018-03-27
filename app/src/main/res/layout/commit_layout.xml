@@ -26,6 +26,7 @@
         android:background="@color/line_color" />
 
     <TextView
+        android:id="@+id/tv_evaluate"
         android:layout_width="65dp"
         android:layout_height="100dp"
         android:gravity="center"

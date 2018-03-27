@@ -19,6 +19,40 @@
 
 
             <LinearLayout
+                android:id="@+id/ll_nick"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center"
+                    android:text="昵称"
+                    android:textColor="@color/tv_color9"
+                    android:textSize="@dimen/size_15" />
+
+                <EditText
+                    android:id="@+id/ed_nick"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="12.5dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@null"
+                    android:gravity="center|left"
+                    android:hint="请设置您的昵称"
+                    android:maxLength="10"
+                    android:textColor="@color/tv_color2"
+                    android:textColorHint="@color/tv_color20"
+                    android:textSize="@dimen/size_15" />
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_marginTop="10dp"
@@ -84,10 +118,28 @@
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp"
                     android:horizontalSpacing="5dp"
-                    android:numColumns="4"
                     android:listSelector="@color/transparent"
+                    android:numColumns="4"
                     android:scrollbars="none"
                     android:verticalSpacing="15dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="15dp"
+                    android:background="@color/applin" />
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:drawableLeft="@drawable/headline_address"
+                    android:drawablePadding="6dp"
+                    android:gravity="center|left"
+                    android:paddingLeft="15dp"
+                    android:text="所在位置"
+                    android:textColor="@color/tv_color2"
+                    android:textSize="@dimen/size_15" />
             </LinearLayout>
 
 

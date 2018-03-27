@@ -3,6 +3,7 @@ package td.com.xiaoheixiong.activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -34,13 +35,15 @@ import td.com.xiaoheixiong.beans.home.Adlist;
 import td.com.xiaoheixiong.eventbus.Msgevent4;
 import td.com.xiaoheixiong.views.SpringProgressView;
 import td.com.xiaoheixiong.views.countdown.CountdownView2;
+import td.com.xiaoheixiong.views.pulltorefresh.PullLayout;
+import td.com.xiaoheixiong.views.pulltorefresh.PullableRefreshScrollView;
 import td.com.xiaoheixiong.views.viewpager.LoopViewPager;
 
 /**
  * 团团详情
  */
 
-public class TuanTuanDetalActivity extends BaseActivity {
+public class TuanTuanDetalActivity extends BaseActivity implements PullableRefreshScrollView.OnScrollChangeListener,PullLayout.OnRefreshListener{
 
 
     private TextView tv_return;
@@ -72,6 +75,16 @@ public class TuanTuanDetalActivity extends BaseActivity {
     private BannerAdapter2 bannerAdapter;
     List<Adlist> adlist=new ArrayList<>();
 
+    private PullLayout refresh_view;
+    private PullableRefreshScrollView mScrollView;
+    private LinearLayout ll_title;
+    private int fadingHeight = 400; // 当ScrollView滑动到什么位置时渐变消失（根据需要进行调整）
+    private Drawable drawable; // 顶部渐变布局需设置的Drawable
+    private static final int START_ALPHA = 0;//scrollview滑动开始位置
+    private static final int END_ALPHA = 255;//scrollview滑动结束位置
+    private Drawable drawableLeft1;
+    private Drawable drawableLeft2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +98,17 @@ public class TuanTuanDetalActivity extends BaseActivity {
 
 
     protected void initViews() {
+        refresh_view= (PullLayout) findViewById(R.id.refresh_view);
+        refresh_view.setOnRefreshListener(this);
+        mScrollView= (PullableRefreshScrollView) findViewById(R.id.mScrollView);
+        ll_title= (LinearLayout) findViewById(R.id.ll_title);
+        drawableLeft1 = getResources().getDrawable(R.drawable.map_return);
+        drawableLeft2= getResources().getDrawable(R.drawable.map_return1);
+        // 这一步必须要做,否则不会显示.
+        drawableLeft1.setBounds(0, 0, drawableLeft1.getMinimumWidth(), drawableLeft1.getMinimumHeight());
+        drawableLeft2.setBounds(0, 0, drawableLeft2.getMinimumWidth(), drawableLeft2.getMinimumHeight());
+
+        mScrollView.setOnScrollChangeListener(this);
         tv_return = (TextView) findViewById(R.id.tv_return);
         ve_pager= (LoopViewPager) findViewById(R.id.ve_pager);
         indicator = (TextView) findViewById(R.id.indicator);
@@ -193,6 +217,41 @@ public class TuanTuanDetalActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEventMain(Msgevent4 messageEvent) {
         StringBuilder sb = new StringBuilder();
+
+    }
+
+
+    @Override
+    public void onScrollChange(PullableRefreshScrollView view, int x, int y, int oldx, int oldy) {
+        if (y > fadingHeight) {
+            y = fadingHeight; // 当滑动到指定位置之后设置颜色为纯色，之前的话要渐变---实现下面的公式即可
+            drawable = getResources().getDrawable(R.color.white);
+            drawable.setAlpha(END_ALPHA);
+            ll_title.setBackgroundDrawable(drawable);
+            tv_return.setTextColor(getResources().getColor(R.color.tv_color2));
+            tv_return.setCompoundDrawables(drawableLeft2, null, null, null);
+//            my_message.setBackground(getResources().getDrawable(R.drawable.home_news_black));
+//                my_message.setBackgroundDrawable(getResources().getDrawable(R.drawable.home_news1));
+        } else if (y < 0) {
+            y = 0;
+        } else {
+            drawable = getResources().getDrawable(R.color.transparent);
+            drawable.setAlpha(y * (END_ALPHA - START_ALPHA) / fadingHeight + START_ALPHA);
+//                drawable.setAlpha(START_ALPHA);
+            tv_return.setTextColor(getResources().getColor(R.color.white));
+            tv_return.setCompoundDrawables(drawableLeft1, null, null, null);
+            ll_title.setBackgroundDrawable(drawable);
+  //          my_message.setBackground(getResources().getDrawable(R.drawable.home_news));
+        }
+    }
+
+    @Override
+    public void onRefresh(PullLayout pullToRefreshLayout) {
+        pullToRefreshLayout.refreshFinish(PullLayout.SUCCEED);
+    }
+
+    @Override
+    public void onLoadMore(PullLayout pullToRefreshLayout) {
 
     }
 }

@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,10 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
+import com.baidu.location.BDAbstractLocationListener;
+import com.baidu.location.BDLocation;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.jaiky.imagespickers.ImageConfig;
 import com.jaiky.imagespickers.ImageSelector;
 import com.jaiky.imagespickers.ImageSelectorActivity;
@@ -34,7 +39,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -42,11 +46,13 @@ import td.com.xiaoheixiong.R;
 import td.com.xiaoheixiong.Utils.GlideLoader;
 import td.com.xiaoheixiong.Utils.ImgSetUtil;
 import td.com.xiaoheixiong.Utils.MyCacheUtil;
+import td.com.xiaoheixiong.Utils.SPUtils;
 import td.com.xiaoheixiong.adapter.AddHeadLineImageAdapter;
 import td.com.xiaoheixiong.aliutil.MyOSSConfig;
 import td.com.xiaoheixiong.aliutil.PutObjectSamples;
 import td.com.xiaoheixiong.beans.MyConstant;
 import td.com.xiaoheixiong.eventbus.Msgevent1;
+import td.com.xiaoheixiong.fragments.TabA2Fragment;
 import td.com.xiaoheixiong.httpNet.HttpUrls;
 import td.com.xiaoheixiong.httpNet.OkHttpClientManager;
 import td.com.xiaoheixiong.views.MyGridview;
@@ -64,6 +70,10 @@ public class AddHeadLineActivity extends BaseActivity implements AdapterView.OnI
     private ImageView back_img;
     private EditText ed_after_sale;
     private MyGridview gv_pic;
+    private TextView tv_address;
+
+    private LinearLayout ll_nick;
+    private EditText ed_nick;
 
 
     private String imagekey;
@@ -78,6 +88,9 @@ public class AddHeadLineActivity extends BaseActivity implements AdapterView.OnI
     public static final int REQUEST_CODE = 123;
     private String MERCNUM;
 
+    private LocationClient mLocationClient = null;
+    public MyLocationListenner myListener = new MyLocationListenner();
+    private String lng, lat, address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +98,11 @@ public class AddHeadLineActivity extends BaseActivity implements AdapterView.OnI
         setContentView(R.layout.activity_add_headline);
         mContext = this;
         MERCNUM = MyCacheUtil.getshared(this).getString("MERCNUM", "");
+        address = (String) SPUtils.get(mContext, "address", "");
+        lng = (String) SPUtils.get(mContext, "lng", "");
+        lat = (String) SPUtils.get(mContext, "lat", "");
         initViews();
+        dingwei();
         EventBus.getDefault().register(this);
     }
 
@@ -96,7 +113,11 @@ public class AddHeadLineActivity extends BaseActivity implements AdapterView.OnI
         gv_pic = (MyGridview) findViewById(R.id.gv_pic);
         close_tv = (TextView) findViewById(R.id.close_tv);
         title_tv = (TextView) findViewById(R.id.title_tv);
-        back_img = (ImageView)findViewById(R.id.back_img);
+        back_img = (ImageView) findViewById(R.id.back_img);
+        tv_address = (TextView) findViewById(R.id.tv_address);
+        ed_nick = (EditText) findViewById(R.id.ed_nick);
+        ll_nick = (LinearLayout) findViewById(R.id.ll_nick);
+
         title_tv.setText("发布动态");
         close_tv.setText("发布");
         close_tv.setVisibility(View.VISIBLE);
@@ -121,9 +142,11 @@ public class AddHeadLineActivity extends BaseActivity implements AdapterView.OnI
                 String description = ed_after_sale.getText().toString();
                 if (StringUtils.isEmpty(description)) {
                     Toast.makeText(getApplicationContext(), "请输入消息内容！", Toast.LENGTH_SHORT).show();
-                } else if (null == bitmapUrls || bitmapUrls.isEmpty()||bitmapUrls.size()==1) {
-                    Toast.makeText(getApplicationContext(), "请上传图片！", Toast.LENGTH_SHORT).show();
-                } else {
+                }
+//                else if (null == bitmapUrls || bitmapUrls.isEmpty() || bitmapUrls.size() == 1) {
+//                    Toast.makeText(getApplicationContext(), "请上传图片！", Toast.LENGTH_SHORT).show();
+//                }
+                else {
                     upLoadAli(description);
 
                 }
@@ -139,12 +162,68 @@ public class AddHeadLineActivity extends BaseActivity implements AdapterView.OnI
         });
     }
 
+
+    private void dingwei() {
+        if (StringUtils.isEmpty(lat) && StringUtils.isEmpty(lng)) {
+            mLocationClient = new LocationClient(mContext);
+            mLocationClient.registerLocationListener(myListener);
+            setLocationOption();
+            mLocationClient.start();
+        } else {
+            tv_address.setText(address);
+        }
+
+    }
+
+
+    // 设置相关参数
+    private void setLocationOption() {
+        LocationClientOption option = new LocationClientOption();
+        option.setOpenGps(true); // 打开gps
+        option.setServiceName("com.baidu.location.service_v2.9");
+        option.setIsNeedLocationPoiList(true);
+        option.setAddrType("all");
+        option.setPriority(LocationClientOption.NetWorkFirst);
+        option.setPriority(LocationClientOption.GpsFirst); // gps
+        option.disableCache(true);
+        option.setScanSpan(3600 * 1000);
+        mLocationClient.setLocOption(option);
+    }
+
+    public class MyLocationListenner extends BDAbstractLocationListener {
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果
+            //以下只列举部分获取地址相关的结果信息
+            //更多结果信息获取说明，请参照类参考中BDLocation类中的说Log.e("location", "jin...");
+            String addr = location.getAddrStr();    //获取详细地址信息
+            String country = location.getCountry();    //获取国家
+            String province = location.getProvince();    //获取省份
+            String city = location.getCity();    //获取城市
+            String district = location.getDistrict();    //获取区县
+            String street = location.getStreet();    //获取街道信息
+            String detal = city + district + street;
+            SPUtils.put(mContext, "address", detal);
+            lat = location.getLatitude() + "";
+            lng = location.getLongitude() + "";
+            SPUtils.put(mContext, "lat", lat);
+            SPUtils.put(mContext, "lng", lng);
+            if (city.contains("市")) {
+                city = city.substring(0, city.length() - 1);
+            }
+            tv_address.setText(city);
+
+        }
+
+    }
+
+
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         if (position == getDataSize()) {
 
-            if(null!=bitmapUrls&&bitmapUrls.size()>0){
-                bitmapUrls.remove(bitmapUrls.size()-1);
+            if (null != bitmapUrls && bitmapUrls.size() > 0) {
+                bitmapUrls.remove(bitmapUrls.size() - 1);
             }
             imageConfig = new ImageConfig.Builder(
                     new GlideLoader())
@@ -172,7 +251,7 @@ public class AddHeadLineActivity extends BaseActivity implements AdapterView.OnI
 
     private int getDataSize() {
 
-        return bitmapUrls == null ? 0 : bitmapUrls.size()-1;
+        return bitmapUrls == null ? 0 : bitmapUrls.size() - 1;
 
     }
 
@@ -188,8 +267,6 @@ public class AddHeadLineActivity extends BaseActivity implements AdapterView.OnI
             certificateAdapter.setList(bitmapUrls);
         }
     }
-
-
 
 
     /**
@@ -299,48 +376,58 @@ public class AddHeadLineActivity extends BaseActivity implements AdapterView.OnI
 
     private void upLoadAli(final String description) {
         showLoadingDialog("...");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i=0;i<bitmapUrls.size();i++ ) {
-                    imagekey = ImgSetUtil.getImgKeyString();
-                    String path=bitmapUrls.get(i);
-                    boolean flag = new PutObjectSamples(oss, MyConstant.ALI_PUBLIC_BUCKET_PUBLIC, imagekey, path).putObjectFromLocalFile();
-                    if (flag) {//上传成功
-                        String headimgurl = MyConstant.ALI_PUBLIC_URL + imagekey;
-                        imagekeyList.add(headimgurl);
-//                        if (i == (bitmapUrls.size()-1)) {
-//                            EventBus.getDefault().post(new Msgevent1(description,images));
-//                        }
-                    }
-//                    else {
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                loadingDialogWhole.dismiss();
-//                                Toast.makeText(getApplicationContext(), "上传失败,请重新上传！", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                    }
-                    if (i == (bitmapUrls.size()-1)) {
-                        EventBus.getDefault().post(new Msgevent1());
+        if (bitmapUrls.size() == 1) {
+            saveHeadlineInfo();
+        } else {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (int i = 0; i < bitmapUrls.size(); i++) {
+                        imagekey = ImgSetUtil.getImgKeyString();
+                        String path = bitmapUrls.get(i);
+                        if (!StringUtils.isEmpty(path)) {
+                            boolean flag = new PutObjectSamples(oss, MyConstant.ALI_PUBLIC_BUCKET_PUBLIC, imagekey, path).putObjectFromLocalFile();
+                            if (flag) {//上传成功
+                                String headimgurl = MyConstant.ALI_PUBLIC_URL + imagekey;
+                                imagekeyList.add(headimgurl);
+                            }
 
-                    }
+                        }
+                        if (i == (bitmapUrls.size() - 1)) {
+                            EventBus.getDefault().post(new Msgevent1());
 
+                        }
+                    }
                 }
-            }
-        }).start();
+            }).start();
+        }
+
     }
 
 
-    private void saveHeadlineInfo(String description, String images) {
+    private void saveHeadlineInfo() {
+        String description = ed_after_sale.getText().toString();
+        StringBuilder sb = new StringBuilder();
+        for (String key : imagekeyList) {
+            if (!StringUtils.isEmpty(key)) {
+                sb.append(key).append("|");
+            }
+        }
+        String images;
+        if(StringUtils.isEmpty(sb.toString())){
+            images="";
+        }else{
+             images = sb.deleteCharAt(sb.length() - 1).toString();
+        }
         HashMap<String, Object> maps = new HashMap<>();
         maps.put("sign", "");
-        maps.put("mercId", MERCNUM);
-        maps.put("mercName", "");
+        maps.put("merc_id", MERCNUM);
         maps.put("description", description);
         maps.put("images", images);
-        showLoadingDialog("...");
+        maps.put("location_desc", tv_address.getText().toString());
+        maps.put("lng", lng);
+        maps.put("lat", lat);
+        maps.put("nickName", ed_nick.getText().toString());
 
         OkHttpClientManager.getInstance(this).requestAsyn(HttpUrls.XHX_add_toutiao, OkHttpClientManager.TYPE_GET,
                 maps, OkHttpClientManager.HOST_javaMpay, new OkHttpClientManager.ReqCallBack() {
@@ -357,7 +444,7 @@ public class AddHeadLineActivity extends BaseActivity implements AdapterView.OnI
                             setResult(1, intent);
                             finish();
                         } else {
-
+                            Toast.makeText(getApplicationContext(), jsonObj.getString("RSPDATA"), Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -365,29 +452,25 @@ public class AddHeadLineActivity extends BaseActivity implements AdapterView.OnI
                     public void onReqFailed(String errorMsg) {
                         // TODO Auto-generated method stub
                         loadingDialogWhole.dismiss();
+                        Toast.makeText(getApplicationContext(), errorMsg, Toast.LENGTH_SHORT).show();
                     }
                 });
-
-
     }
 
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (null != mLocationClient && mLocationClient.isStarted()) {
+            mLocationClient.stop();
+        }
         EventBus.getDefault().unregister(this);
     }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEventMain(Msgevent1 messageEvent) {
-        StringBuilder sb = new StringBuilder();
-        for (String key : imagekeyList) {
-            if(!StringUtils.isEmpty(key)){
-                sb.append(key).append("|");
-            }
-        }
-        String images = sb.deleteCharAt(sb.length() - 1).toString();
-        saveHeadlineInfo(ed_after_sale.getText().toString(), images);
+
+        saveHeadlineInfo();
     }
 }

@@ -116,7 +116,7 @@ public class MarketingActivity extends BaseActivity {
             public void click(int position, View view) {
                 //0 团团  1 秒秒 2 游戏卡券
                 Intent intent=new Intent(MarketingActivity.this,AddMarkingActivity.class);
-                intent.putExtra("position",position);
+                intent.putExtra("position",position+1);
                 startActivity(intent);
                 if(position==0){
 

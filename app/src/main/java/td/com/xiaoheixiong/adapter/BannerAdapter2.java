@@ -62,8 +62,8 @@ public class BannerAdapter2 extends PagerAdapter {
         final Adlist bean = list.get(position);
         String banner = (bean.getImgUrl()).trim();
         Glide.with(context).load(banner)
-                .fitCenter()
-                .override(width, DimenUtils.dip2px(context, 156))
+                .centerCrop()
+             //   .override(width, DimenUtils.dip2px(context, 156))
                 .placeholder(R.drawable.pic_nomal_loading_style)
                 .error(R.drawable.pic_nomal_loading_style)
                 .into(holderView.iv_banner);

@@ -180,7 +180,7 @@ public class ImgSetUtil {
             options.inJustDecodeBounds = false;
 
             Bitmap bitmap = BitmapFactory.decodeFile(path, options);
-            bitmap1 = adjustBitmapSize(bitmap, MyConstant.DEF_IMG_W, MyConstant.DEF_IMG_H);
+            bitmap1 = adjustBitmapSize(bitmap, 30, 30);
         }catch (Exception e){
             return null;
         }

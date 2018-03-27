@@ -18,12 +18,14 @@ import com.squareup.picasso.Picasso;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
 import td.com.xiaoheixiong.R;
 import td.com.xiaoheixiong.Utils.CircleImageTransformation;
+import td.com.xiaoheixiong.Utils.ListUtils;
 import td.com.xiaoheixiong.Utils.MyCacheUtil;
 import td.com.xiaoheixiong.beans.TouTiaoBean;
 import td.com.xiaoheixiong.httpNet.HttpUrls;
@@ -91,25 +93,60 @@ public class NineGridTestAdapter extends BaseAdapter {
         }
 
         holder.layout.setIsShowAll(mList.get(position).isShowAll);
-        holder.layout.setUrlList(mList.get(position).getImageList());
+        ArrayList list = ListUtils.getList(mList.get(position).getImages());
+        holder.layout.setUrlList(list);
 
 
         holder.tv_desc.setText(touTiaoBean.getDescription());
-        holder.time_tv.setText(touTiaoBean.getPublishTime());
-        String mercName = touTiaoBean.getMercName();
-        if (mercName == null || mercName.trim().length() == 0) {
-            holder.name_tv.setText("");
+        holder.time_tv.setText(touTiaoBean.getCreate_time());
+        String nickName = touTiaoBean.getNickName();
+        if (nickName == null || nickName.trim().length() == 0) {
+            holder.name_tv.setText("用户***");
         } else {
-            holder.name_tv.setText(mercName);
+            holder.name_tv.setText(nickName);
         }
-        final int realPraise = touTiaoBean.getRealPraise();
-        holder.zanNum_tv.setText(realPraise + "");
 
-        String mercImg = touTiaoBean.getMercImg();
+        String location_desc = touTiaoBean.getLocation_desc();
+        if (!StringUtils.isEmpty(location_desc)) {
+            holder.tv_address.setText(location_desc);
+            holder.tv_address.setVisibility(View.VISIBLE);
+        } else {
+            holder.tv_address.setVisibility(View.GONE);
+        }
+
+        final String realPraise = touTiaoBean.getReal_praise();
+        if (!StringUtils.isEmpty(realPraise)) {
+            holder.zanNum_tv.setText(realPraise);
+        }
+
+        String forwardNum = touTiaoBean.getForwardNum();
+        if (!StringUtils.isEmpty(forwardNum)) {
+            holder.tv_zhuanfa.setText("");
+        } else {
+            holder.tv_zhuanfa.setText(forwardNum);
+        }
+
+        String replyNum = touTiaoBean.getReplyNum();
+        if (!StringUtils.isEmpty(replyNum)) {
+            holder.tv_evaluate.setText("");
+        } else {
+            holder.tv_evaluate.setText(replyNum);
+        }
+        boolean isPraise= touTiaoBean.isPraise();
+        if(isPraise){
+            holder.zan_img.setImageResource(R.drawable.headline_praise1);
+        }else{
+            holder.zan_img.setImageResource(R.drawable.headline_praise);
+        }
+
+
+        String mercImg = touTiaoBean.getHeadImg();
         if (StringUtils.isNotBlank(mercImg)) {
             //   glideRequest.load(datas.get(position).get("mercImg")).transform(new GlideCircleTransform(mContext)).into(viewHolder.head_img);
 
-            Picasso.with(mContext).load(mercImg).transform(new CircleImageTransformation(mContext)).placeholder(new ColorDrawable(Color.parseColor("#f5f5f5"))).into(holder.head_img);
+            Picasso.with(mContext).load(mercImg)
+                    .transform(new CircleImageTransformation(mContext))
+                    .placeholder(new ColorDrawable(Color.parseColor("#f5f5f5"))).into(holder.head_img);
 
         } else {
             //    glideRequest.load(R.mipmap.app_icon).transform(new GlideCircleTransform(mContext)).into(viewHolder.head_img);
@@ -119,8 +156,10 @@ public class NineGridTestAdapter extends BaseAdapter {
         }
         if (type == 2) {
             holder.img_delete.setVisibility(View.VISIBLE);
+            holder.tv_see.setVisibility(View.GONE);
         } else {
             holder.img_delete.setVisibility(View.GONE);
+            holder.tv_see.setVisibility(View.VISIBLE);
         }
 
 
@@ -132,6 +171,8 @@ public class NineGridTestAdapter extends BaseAdapter {
         final int four = holder.img_delete.getId();
         final int five = holder.tv_zhuanfa.getId();
         final int six = holder.tv_evaluate.getId();
+        final int seven = holder.ll_detal.getId();
+
         holder.zanNum_tv.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -176,16 +217,13 @@ public class NineGridTestAdapter extends BaseAdapter {
             }
         });
 
+        holder.ll_detal.setOnClickListener(new View.OnClickListener() {
 
-
-        Random rand = new Random();
-        int num=rand.nextInt(100);
-        holder.tv_zhuanfa.setText(num+"");
-
-        Random rand2 = new Random();
-        int num2=rand2.nextInt(100);
-        holder.tv_evaluate.setText(num2+"");
-
+            @Override
+            public void onClick(View v) {
+                callback.onClick(view, parent, p, seven);
+            }
+        });
         return convertView;
     }
 
@@ -197,10 +235,13 @@ public class NineGridTestAdapter extends BaseAdapter {
         private TextView zanNum_tv;
         private ImageView head_img;
         private ImageView img_delete;
-        LinearLayout zan_ll;
+        private LinearLayout zan_ll;
+        private LinearLayout ll_detal;
         private ImageView zan_img;
         private TextView tv_zhuanfa;
         private TextView tv_evaluate;
+        private TextView tv_address;
+        private TextView tv_see;
 
         public ViewHolder(View view) {
             layout = (NineGridTestLayout) view.findViewById(R.id.layout_nine_grid);
@@ -214,6 +255,9 @@ public class NineGridTestAdapter extends BaseAdapter {
             img_delete = (ImageView) view.findViewById(R.id.img_delete);
             tv_zhuanfa = (TextView) view.findViewById(R.id.tv_zhuanfa);
             tv_evaluate = (TextView) view.findViewById(R.id.tv_evaluate);
+            ll_detal = (LinearLayout) view.findViewById(R.id.ll_detal);
+            tv_address = (TextView) view.findViewById(R.id.tv_address);
+            tv_see = (TextView) view.findViewById(R.id.tv_see);
         }
     }
 

@@ -41,11 +41,13 @@ import td.com.xiaoheixiong.R;
 import td.com.xiaoheixiong.Utils.DimenUtils;
 import td.com.xiaoheixiong.Utils.GlideLoader;
 import td.com.xiaoheixiong.Utils.ImgSetUtil;
+import td.com.xiaoheixiong.Utils.ListUtils;
 import td.com.xiaoheixiong.Utils.MyCacheUtil;
 import td.com.xiaoheixiong.adapter.AddHeadLineImageAdapter;
 import td.com.xiaoheixiong.aliutil.MyOSSConfig;
 import td.com.xiaoheixiong.aliutil.PutObjectSamples;
 import td.com.xiaoheixiong.beans.MyConstant;
+import td.com.xiaoheixiong.beans.TuanTuan.TTBean;
 import td.com.xiaoheixiong.dialogs.DialogCalendar;
 import td.com.xiaoheixiong.eventbus.Msgevent4;
 import td.com.xiaoheixiong.eventbus.Msgevent5;
@@ -102,10 +104,11 @@ public class AddMarkingActivity extends BaseActivity implements AdapterView.OnIt
     public static final int MM_SINGLE_REQUEST_CODE = 125;
     private String MERCNUM;
     final DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-    //0 团团  1 秒秒 2 游戏卡券
+    //1 团团  2 秒秒 3 游戏卡券
     private int position;
     private ImagePicker imagePicker = new ImagePicker();
     private int width;
+    private TTBean ttBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +116,7 @@ public class AddMarkingActivity extends BaseActivity implements AdapterView.OnIt
         setContentView(R.layout.activity_add_tt_mm);
         mContext = this;
         position = getIntent().getIntExtra("position", 0);
+        ttBean=(TTBean)getIntent().getSerializableExtra("ttBean");
         MERCNUM = MyCacheUtil.getshared(this).getString("MERCNUM", "");
         initViews();
         EventBus.getDefault().register(this);
@@ -140,7 +144,7 @@ public class AddMarkingActivity extends BaseActivity implements AdapterView.OnIt
         ll_tt_num = (LinearLayout) findViewById(R.id.ll_tt_num);
         view_line = (View) findViewById(R.id.view_line);
         tv_submit = (TextView) findViewById(R.id.tv_submit);
-        if (position == 0) {//团团
+        if (position == 1) {//团团
             ll_tt.setVisibility(View.VISIBLE);
             ll_mm.setVisibility(View.GONE);
             ll_mm_num.setVisibility(View.GONE);
@@ -148,7 +152,7 @@ public class AddMarkingActivity extends BaseActivity implements AdapterView.OnIt
             view_line.setVisibility(View.GONE);
             ll_tt_num.setVisibility(View.VISIBLE);
             title_tv.setText("新建团团");
-        } else if (position == 1) {//秒秒
+        } else if (position == 2) {//秒秒
             ll_tt.setVisibility(View.GONE);
             ll_mm.setVisibility(View.VISIBLE);
             ll_mm_num.setVisibility(View.VISIBLE);
@@ -157,14 +161,71 @@ public class AddMarkingActivity extends BaseActivity implements AdapterView.OnIt
             ll_tt_num.setVisibility(View.GONE);
             title_tv.setText("新建秒秒");
         }
-        bitmapUrls.add("");
+
+        if (null != ttBean) {//预览
+            String name = ttBean.getName();
+            String price = ttBean.getPrice();
+            String cardNum = ttBean.getCardNum();
+            String description = ttBean.getDescription();
+            String endTime = ttBean.getEndTime();
+            String detailImg = ttBean.getDetailImg();
+            mainImg = ttBean.getMainImg();
+            String enterNum = ttBean.getEnterNum();
+            ed_title.setText(name);
+            ed_card_detal.setText(description);
+            ed_endTime.setText(endTime);
+            ed_money.setText(price);
+            ed_num.setText(cardNum);
+            ed_tt_num.setText(enterNum);
+
+            ed_title.setClickable(false);
+            ed_card_detal.setClickable(false);
+            ed_endTime.setClickable(false);
+            ed_money.setClickable(false);
+            ed_num.setClickable(false);
+            ed_tt_num.setClickable(false);
+
+            ed_title.setFocusable(false);
+            ed_card_detal.setFocusable(false);
+            ed_endTime.setFocusable(false);
+            ed_money.setFocusable(false);
+            ed_num.setFocusable(false);
+            ed_tt_num.setFocusable(false);
+
+            tv_submit.setVisibility(View.GONE);
+            if (position == 2) {
+                title_tv.setText("秒秒");
+                Glide.with(mContext).load(mainImg)
+                        .fitCenter()
+                        //    .override(width, DimenUtils.dip2px(context, 540))
+                        .placeholder(R.drawable.pic_nomal_loading_style)
+                        .error(R.drawable.pic_nomal_loading_style)
+                        .into(img_mm);
+            } else if (position == 1) {
+                title_tv.setText("团团");
+                Glide.with(mContext).load(mainImg)
+                        .fitCenter()
+                        //    .override(width, DimenUtils.dip2px(context, 540))
+                        .placeholder(R.drawable.pic_nomal_loading_style)
+                        .error(R.drawable.pic_nomal_loading_style)
+                        .into(img_tt);
+            }
+
+            bitmapUrls = ListUtils.getList(detailImg);
+        } else {//新增
+            bitmapUrls.add("");
+        }
         certificateAdapter = new AddHeadLineImageAdapter(this, bitmapUrls);
         gv_pic_more.setAdapter(certificateAdapter);
         gv_pic_more.setOnItemClickListener(this);
         certificateAdapter.setOnDeleteImageListener(new AddHeadLineImageAdapter.OnDeleteImageListener() {
             @Override
             public void click(int position) {
-                bitmapUrls.remove(position);
+                try{
+                    bitmapUrls.remove(position);
+                }catch (Exception e){
+
+                }
                 certificateAdapter.setList(bitmapUrls);
             }
         });
@@ -188,13 +249,13 @@ public class AddMarkingActivity extends BaseActivity implements AdapterView.OnIt
                 } else if (null == bitmapUrls || bitmapUrls.isEmpty() || bitmapUrls.size() == 1) {
                     Toast.makeText(getApplicationContext(), "请上传详情页展示图！", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (position == 0) {
+                    if (position == 1) {
                         if (StringUtils.isEmpty(mainImg)) {
                             Toast.makeText(getApplicationContext(), "请上传首页展示图！", Toast.LENGTH_SHORT).show();
                         } else if (StringUtils.isEmpty(enterNum)) {
                             Toast.makeText(getApplicationContext(), "请输入成团人数！", Toast.LENGTH_SHORT).show();
                         }
-                    } else if (position == 1) {
+                    } else if (position ==2) {
                         if (StringUtils.isEmpty(mainImg)) {
                             Toast.makeText(getApplicationContext(), "请上传活动展示图！", Toast.LENGTH_SHORT).show();
                         } else if (StringUtils.isEmpty(mm_num)) {
@@ -226,15 +287,20 @@ public class AddMarkingActivity extends BaseActivity implements AdapterView.OnIt
         img_mm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startChooser(487, 158);
+                if(null==ttBean){
+                    startChooser(487, 158);
+                }
+
             }
         });
 
         img_tt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(null==ttBean){
+                    startChooser((width-60),312);
+                }
 
-                startChooser((width-60),312);
 
 
 //                imageConfig = new ImageConfig.Builder(
@@ -256,6 +322,27 @@ public class AddMarkingActivity extends BaseActivity implements AdapterView.OnIt
 //                ImageSelector.open(AddMarkingActivity.this, imageConfig);
             }
         });
+
+        imageConfig = new ImageConfig.Builder(
+                new GlideLoader())
+                .steepToolBarColor(getResources().getColor(R.color.titleBlue))
+                .titleBgColor(getResources().getColor(R.color.titleBlue))
+                .titleSubmitTextColor(getResources().getColor(R.color.white))
+                .titleTextColor(getResources().getColor(R.color.white))
+                // 开启多选   （默认为多选）
+                .mutiSelect()
+                // 多选时的最大数量   （默认 9 张）
+                .mutiSelectMaxSize(3)
+                //设置图片显示容器，参数：、（容器，每行显示数量，是否可删除）
+                //      .setContainer(gv_pic, 4, true)
+                // 已选择的图片路径
+                .pathList(bitmapUrls)
+                // 拍照后存放的图片路径（默认 /temp/picture）
+                .filePath("/temp")
+                // 开启拍照功能 （默认关闭）
+                .showCamera()
+                .requestCode(REQUEST_CODE)
+                .build();
     }
 
 
@@ -323,30 +410,10 @@ public class AddMarkingActivity extends BaseActivity implements AdapterView.OnIt
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         if (position == getDataSize()) {
-
             if (null != bitmapUrls && bitmapUrls.size() > 0) {
                 bitmapUrls.remove(bitmapUrls.size() - 1);
             }
-            imageConfig = new ImageConfig.Builder(
-                    new GlideLoader())
-                    .steepToolBarColor(getResources().getColor(R.color.titleBlue))
-                    .titleBgColor(getResources().getColor(R.color.titleBlue))
-                    .titleSubmitTextColor(getResources().getColor(R.color.white))
-                    .titleTextColor(getResources().getColor(R.color.white))
-                    // 开启多选   （默认为多选）
-                    .mutiSelect()
-                    // 多选时的最大数量   （默认 9 张）
-                    .mutiSelectMaxSize(3)
-                    //设置图片显示容器，参数：、（容器，每行显示数量，是否可删除）
-                    //      .setContainer(gv_pic, 4, true)
-                    // 已选择的图片路径
-                    .pathList(bitmapUrls)
-                    // 拍照后存放的图片路径（默认 /temp/picture）
-                    .filePath("/temp")
-                    // 开启拍照功能 （默认关闭）
-                    .showCamera()
-                    .requestCode(REQUEST_CODE)
-                    .build();
+
             ImageSelector.open(AddMarkingActivity.this, imageConfig);
         }
     }
@@ -370,6 +437,10 @@ public class AddMarkingActivity extends BaseActivity implements AdapterView.OnIt
                 certificateAdapter.setList(bitmapUrls);
             } else {
                 imagePicker.onActivityResult(this, requestCode, resultCode, data);
+            }
+        }else{
+            if (requestCode == REQUEST_CODE) {
+                bitmapUrls.add("");
             }
         }
     }
@@ -454,8 +525,7 @@ public class AddMarkingActivity extends BaseActivity implements AdapterView.OnIt
                             loadingDialogWhole.dismiss();
                             mainImg = MyConstant.ALI_PUBLIC_URL + key;
                             switch (value) {
-                                case 1:
-                                    ;
+                                case 2:
                                     Glide.with(mContext).load(mainImg)
                                             .fitCenter()
                                             //    .override(width, DimenUtils.dip2px(context, 540))
@@ -463,8 +533,7 @@ public class AddMarkingActivity extends BaseActivity implements AdapterView.OnIt
                                             .error(R.drawable.pic_nomal_loading_style)
                                             .into(img_mm);
                                     break;
-                                case 0:
-                                    ;
+                                case 1:
                                     Glide.with(mContext).load(mainImg)
                                             .fitCenter()
                                             //    .override(width, DimenUtils.dip2px(context, 540))
@@ -498,28 +567,18 @@ public class AddMarkingActivity extends BaseActivity implements AdapterView.OnIt
                 for (int i = 0; i < bitmapUrls.size(); i++) {
                     imagekey = ImgSetUtil.getImgKeyString();
                     String path = bitmapUrls.get(i);
-                    boolean flag = new PutObjectSamples(oss, MyConstant.ALI_PUBLIC_BUCKET_PUBLIC, imagekey, path).putObjectFromLocalFile();
-                    if (flag) {//上传成功
-                        String headimgurl = MyConstant.ALI_PUBLIC_URL + imagekey;
-                        imagekeyList.add(headimgurl);
-//                        if (i == (bitmapUrls.size()-1)) {
-//                            EventBus.getDefault().post(new Msgevent1(description,images));
-//                        }
+                    if(!StringUtils.isEmpty(path)){
+                        boolean flag = new PutObjectSamples(oss, MyConstant.ALI_PUBLIC_BUCKET_PUBLIC, imagekey, path).putObjectFromLocalFile();
+                        if (flag) {//上传成功
+                            String headimgurl = MyConstant.ALI_PUBLIC_URL + imagekey;
+                            imagekeyList.add(headimgurl);
+
+                        }
                     }
-//                    else {
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                loadingDialogWhole.dismiss();
-//                                Toast.makeText(getApplicationContext(), "上传失败,请重新上传！", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                    }
                     if (i == (bitmapUrls.size() - 1)) {
                         EventBus.getDefault().post(new Msgevent4());
 
                     }
-
                 }
             }
         }).start();
@@ -540,10 +599,10 @@ public class AddMarkingActivity extends BaseActivity implements AdapterView.OnIt
         maps.put("description", description);
         maps.put("mercId", MERCNUM);
         String url = "";
-        if (position == 0) {
+        if (position == 1) {
             url = HttpUrls.XHX_add_tuantuan;
             maps.put("enterNum", enterNum);
-        } else if (position == 1) {//秒秒
+        } else if (position == 2) {//秒秒
             url = HttpUrls.XHX_add_miaomiao;
             maps.put("endTime", endTime);
             maps.put("numbers", mm_num);

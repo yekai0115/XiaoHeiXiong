@@ -73,7 +73,6 @@
                 android:gravity="center|left"
                 android:layout_marginLeft="7.5dp"
                 android:text="倒计时"
-                android:textStyle="bold"
                 android:textColor="@color/tv_color24"
                 android:textSize="@dimen/size_15" />
 

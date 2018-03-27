@@ -49,7 +49,7 @@ public class MyHeadLineActivity extends BaseActivity implements PullLayout.OnRef
 
     private NineGridTestAdapter adapter;
     private String  pageSize = "10", MERCNUM;
-    private int pageNum = 1;
+    private int pageNum = 0;
     private int pages;
 
 
@@ -99,8 +99,8 @@ public class MyHeadLineActivity extends BaseActivity implements PullLayout.OnRef
         showLoadingDialog("...");
         HashMap<String, Object> maps = new HashMap<>();
         maps.put("mercId", MERCNUM);
-        maps.put("pageNum", pageNum);
-        maps.put("pageSize", pageSize);
+        maps.put("page", pageNum);
+        maps.put("size", pageSize);
 
         OkHttpClientManager.getInstance(this).requestAsyn(HttpUrls.XHX_toutiao, OkHttpClientManager.TYPE_POST_JSON, maps,
                 OkHttpClientManager.HOST_javaMpay, new OkHttpClientManager.ReqCallBack() {
@@ -112,8 +112,8 @@ public class MyHeadLineActivity extends BaseActivity implements PullLayout.OnRef
                         if (oJSON.get("RSPCOD").equals("000000")) {
                             JsonRootBean jsonRootBean= GsonUtil.GsonToBean(oJSON.toString(),JsonRootBean.class);
                             Detail detail=jsonRootBean.getDetail();
-                            List<TouTiaoBean> list=  detail.getList();
-                             pages=  detail.getPages();
+                            List<TouTiaoBean> list=  detail.getLists();
+                             pages=  detail.getTotalPage();
                             if(state==1){
                                 touTiaoBeanList.clear();
                             }else if(state==2){
@@ -130,7 +130,7 @@ public class MyHeadLineActivity extends BaseActivity implements PullLayout.OnRef
                     @Override
                     public void onReqFailed(String errorMsg) {
                         loadingDialogWhole.dismiss();
-                        Toast.makeText(getApplicationContext(), "网络不给力！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), errorMsg, Toast.LENGTH_SHORT).show();
 
 
                         if(state==1){
@@ -149,7 +149,7 @@ public class MyHeadLineActivity extends BaseActivity implements PullLayout.OnRef
     @Override
     public void onRefresh(PullLayout pullToRefreshLayout) {
 
-        pageNum=1;
+        pageNum=0;
         getdata(2);
     }
 
@@ -211,7 +211,7 @@ public class MyHeadLineActivity extends BaseActivity implements PullLayout.OnRef
             return;
         switch (requestCode) {
             case 1://刷新
-                pageNum=1;
+                pageNum=0;
                 getdata(2);
                 break;
             default:

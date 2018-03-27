@@ -8,9 +8,11 @@ import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -20,6 +22,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baidu.location.BDAbstractLocationListener;
@@ -32,13 +35,17 @@ import com.baidu.mapapi.search.geocode.GeoCodeResult;
 import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
+
 import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import butterknife.ButterKnife;
 import td.com.xiaoheixiong.R;
 import td.com.xiaoheixiong.Utils.GsonUtil;
+import td.com.xiaoheixiong.Utils.KeyBoardUtils;
 import td.com.xiaoheixiong.Utils.MyCacheUtil;
 import td.com.xiaoheixiong.Utils.SPUtils;
 import td.com.xiaoheixiong.Utils.UpdateManager.UpdateManager;
@@ -72,8 +79,9 @@ import td.com.xiaoheixiong.views.MyListView;
 import td.com.xiaoheixiong.views.pulltorefresh.PullLayout;
 import td.com.xiaoheixiong.views.pulltorefresh.PullableRefreshScrollView;
 import td.com.xiaoheixiong.views.viewpager.LoopViewPager;
+import td.com.xiaoheixiong.views.viewpager.MaterialIndicator;
 
-public class TabA2Fragment extends BaseFragment implements View.OnClickListener,PullLayout.OnRefreshListener {
+public class TabA2Fragment extends BaseFragment implements View.OnClickListener, PullLayout.OnRefreshListener {
 
     private TextView address_tv;
     private EditText search_tv;
@@ -81,6 +89,7 @@ public class TabA2Fragment extends BaseFragment implements View.OnClickListener,
     private FrameLayout fl_banner;
     private LoopViewPager ve_pager;
     private TextView indicator;
+    private MaterialIndicator bannerIndicator;
 
     private TextView tv_miaomiao;
     private MyGridview gv_miaomiao;
@@ -106,7 +115,7 @@ public class TabA2Fragment extends BaseFragment implements View.OnClickListener,
 
     private GeoCoder mSearch;
     private SharedPreferences.Editor editor;
-    private String mercId, lng, lat, pageSize = "10",  city = "深圳", HeadName, total = "4", lastPage = "";
+    private String mercId, lng, lat, pageSize = "10", city = "深圳", HeadName, total = "4", lastPage = "";
     private int pageNum = 1;
 
     private BannerAdapter bannerAdapter;
@@ -133,17 +142,16 @@ public class TabA2Fragment extends BaseFragment implements View.OnClickListener,
 
     private MiaoMiaoAdapter miaoMiaoAdapter;
     private List<MerMarkList> merMarkList = new ArrayList<>();
-    private List<TTBean> mmBeanList= new ArrayList<>();
-
+    private List<TTBean> mmBeanList = new ArrayList<>();
 
 
     private TuanTuanAdapter tuanTuanAdapter;
-    private List<GroupMmerMarkList> groupMmerMarkList= new ArrayList<>();
-    private List<TTBean> ttBeanList= new ArrayList<>();
+    private List<GroupMmerMarkList> groupMmerMarkList = new ArrayList<>();
+    private List<TTBean> ttBeanList = new ArrayList<>();
 
 
     private YouYouAdapter youYouAdapter;
-    private  List<YouYouList> youYouLists= new ArrayList<>();
+    private List<YouYouList> youYouLists = new ArrayList<>();
 
 
     @Override
@@ -170,7 +178,7 @@ public class TabA2Fragment extends BaseFragment implements View.OnClickListener,
         mercId = MyCacheUtil.getshared(getActivity()).getString("MERCNUM", "");
         lng = MyCacheUtil.getshared(getActivity()).getString("lng", "");
         lat = MyCacheUtil.getshared(getActivity()).getString("lat", "");
-        getdata("",1);
+        getdata("", 1);
         initeview();
         dingwei();
         getCityLngLat();
@@ -185,6 +193,7 @@ public class TabA2Fragment extends BaseFragment implements View.OnClickListener,
         search_tv = (EditText) view.findViewById(R.id.search_tv);
         fl_banner = (FrameLayout) view.findViewById(R.id.fl_banner);
         ve_pager = (LoopViewPager) view.findViewById(R.id.ve_pager);
+        bannerIndicator= (MaterialIndicator) view.findViewById(R.id.bannerIndicator);
         indicator = (TextView) view.findViewById(R.id.indicator);
         tv_miaomiao = (TextView) view.findViewById(R.id.tv_miaomiao);
         gv_miaomiao = (MyGridview) view.findViewById(R.id.gv_miaomiao);
@@ -202,35 +211,53 @@ public class TabA2Fragment extends BaseFragment implements View.OnClickListener,
         gv_miaomiao.setAdapter(miaoMiaoAdapter);
         tuanTuanAdapter = new TuanTuanAdapter(mContext, ttBeanList);
         lv_tuantuan.setAdapter(tuanTuanAdapter);
-        youYouAdapter=new YouYouAdapter(mContext,youYouLists);
+        youYouAdapter = new YouYouAdapter(mContext, youYouLists);
         lv_yy.setAdapter(youYouAdapter);
         address_tv.setOnClickListener(this);
         tv_miaomiao.setOnClickListener(this);
         tv_tuantuan.setOnClickListener(this);
         tv_youyou.setOnClickListener(this);
         refresh_view.setOnRefreshListener(this);
-        search_tv.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//        search_tv.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                String text = search_tv.getText().toString().trim();
+//                if (StringUtils.isNotBlank(text)) {
+//                    pageNum = 0;
+//                    lastPage = "";
+//                    getdata(search_tv.getText() + "",1);
+//                } else {
+//
+//                }
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//
+//            }
+//        });
 
-            }
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String text = search_tv.getText().toString().trim();
-                if (StringUtils.isNotBlank(text)) {
+        search_tv.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                if (actionId == EditorInfo.IME_ACTION_SEND || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER))
+
+                {
+                    KeyBoardUtils.closeKeybord(search_tv, getActivity());
                     pageNum = 1;
                     lastPage = "";
-                    getdata(search_tv.getText() + "",1);
-                } else {
-
+                    getdata(search_tv.getText() + "", 2);
+                    return true;
                 }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
+                return false;
             }
         });
 
@@ -243,7 +270,7 @@ public class TabA2Fragment extends BaseFragment implements View.OnClickListener,
 //                startActivity(it);
 
                 Intent it = new Intent(getActivity(), MiaoMiaoDetalActivity.class);
-                TTBean ttBean=mmBeanList.get(i);
+                TTBean ttBean = mmBeanList.get(i);
                 it.putExtra("ttBean", ttBean);
                 startActivity(it);
             }
@@ -255,6 +282,7 @@ public class TabA2Fragment extends BaseFragment implements View.OnClickListener,
                 Intent it = new Intent(getActivity(), MechatDetailsActivity.class);
                 it.putExtra("mercId", youYouLists.get(i).getMercId() + "");
                 it.putExtra("orgcode", youYouLists.get(i).getOrgcode() + "");
+                it.putExtra("imgUrl", youYouLists.get(i).getMainImgUrl() + "");
                 startActivity(it);
             }
         });
@@ -268,7 +296,7 @@ public class TabA2Fragment extends BaseFragment implements View.OnClickListener,
 
 
                 Intent it = new Intent(getActivity(), TuanTuanDetalActivity.class);
-                TTBean ttBean=ttBeanList.get(i);
+                TTBean ttBean = ttBeanList.get(i);
                 it.putExtra("ttBean", ttBean);
                 startActivity(it);
 
@@ -315,7 +343,7 @@ public class TabA2Fragment extends BaseFragment implements View.OnClickListener,
                 lng = result.getLocation().longitude + "";
                 pageNum = 1;
                 lastPage = "";
-                getdata("",1);
+                getdata("", 2);
             }
         });
 
@@ -333,10 +361,14 @@ public class TabA2Fragment extends BaseFragment implements View.OnClickListener,
             String city = location.getCity();    //获取城市
             String district = location.getDistrict();    //获取区县
             String street = location.getStreet();    //获取街道信息
-            String detal=city+district+street;
-            SPUtils.put(mContext,"address",detal);
-            if(city.contains("市")){
-                city= city.substring(0,city.length()-1);
+            String detal = city + district + street;
+            SPUtils.put(mContext, "address", detal);
+            lat = location.getLatitude() + "";
+            lng = location.getLongitude() + "";
+            SPUtils.put(mContext, "lat", detal);
+            SPUtils.put(mContext, "address", detal);
+            if (city.contains("市")) {
+                city = city.substring(0, city.length() - 1);
             }
 //            if (location.getCity().equals("") || location.getCity() == null) {
 //                address_tv.setText(city);
@@ -380,7 +412,12 @@ public class TabA2Fragment extends BaseFragment implements View.OnClickListener,
 //            }
 //        }
 //        pageNum = String.valueOf(a);
-        showLoadingDialog("...");
+
+        if (null == loadingDialogWhole) {
+            showLoadingDialog("...");
+        } else {
+            loadingDialogWhole.show();
+        }
 
         HashMap<String, Object> maps = new HashMap<>();
         maps.put("mercId", mercId);
@@ -405,22 +442,23 @@ public class TabA2Fragment extends BaseFragment implements View.OnClickListener,
                         }
 
                         JSONObject oJSON = JSON.parseObject(result + "");
-                        if (oJSON.get("RSPCOD").equals("000000")) {
-                            HomeDetalBean jsonRootBean = GsonUtil.GsonToBean(oJSON.toString(), HomeDetalBean.class);
-                            List<Adlist> adlist = jsonRootBean.getAdlist();//轮播图
-                            initBanner(adlist);
-                            mDatas = jsonRootBean.getCatas();//分类
-                            showclassification();
-                            List<Detail> detail = jsonRootBean.getDetail();//优优商家数据
-                            if(detail==null||detail.isEmpty()){
+                        try {
+                            if (oJSON.get("RSPCOD").equals("000000")) {
+                                HomeDetalBean jsonRootBean = GsonUtil.GsonToBean(oJSON.toString(), HomeDetalBean.class);
+                                List<Adlist> adlist = jsonRootBean.getAdlist();//轮播图
+                                initBanner(adlist);
+                                mDatas = jsonRootBean.getCatas();//分类
+                                showclassification();
+                                List<Detail> detail = jsonRootBean.getDetail();//优优商家数据
+                                if (detail == null || detail.isEmpty()) {
 
-                            }else{
-                                Detail detail1= detail.get(0);
-                                PageInfo pageInfo=detail1.getPageInfo();
-                                youYouLists= pageInfo.getList();
-                                youYouAdapter.updateListview(youYouLists);
-                                setListviewHeight(lv_yy);
-                            }
+                                } else {
+                                    Detail detail1 = detail.get(0);
+                                    PageInfo pageInfo = detail1.getPageInfo();
+                                    youYouLists = pageInfo.getList();
+                                    youYouAdapter.updateListview(youYouLists);
+                                    setListviewHeight(lv_yy);
+                                }
 
 //                            merMarkList = jsonRootBean.getMerMarkList();//秒秒数据
 //                            miaoMiaoAdapter.setList(merMarkList);
@@ -428,11 +466,15 @@ public class TabA2Fragment extends BaseFragment implements View.OnClickListener,
 //                            tuanTuanAdapter.updateListview(groupMmerMarkList);
 //                            setListviewHeight(lv_tuantuan);
 
-                            getMiaoMiaoList(state);
-                            getTuanTuanList(state);
-                        } else {
+                                getMiaoMiaoList(state);
+                                getTuanTuanList(state);
+                            } else {
+
+                            }
+                        } catch (Exception e) {
 
                         }
+
                     }
 
                     @Override
@@ -461,6 +503,8 @@ public class TabA2Fragment extends BaseFragment implements View.OnClickListener,
                 ve_pager.setLooperPic(false);
             } else {
                 ve_pager.setLooperPic(true);
+                ve_pager.addOnPageChangeListener(bannerIndicator);
+                bannerIndicator.setAdapter(ve_pager.getAdapter());
             }
         }
         bannerAdapter.notifyDataSetChanged();
@@ -506,8 +550,9 @@ public class TabA2Fragment extends BaseFragment implements View.OnClickListener,
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     int pos = position + curIndex * catPageSize;
+                    // Toast.makeText(getActivity(),mDatas.get(pos).getSubCataName()+":id"+mDatas.get(pos).getId(),Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(mContext, MerchatTypesActivity.class);
-                    intent.putExtra("subCataId", mDatas.get(position).getId() + "");
+                    intent.putExtra("subCataId", mDatas.get(pos).getId() + "");
                     mContext.startActivity(intent);
                 }
             });
@@ -563,25 +608,17 @@ public class TabA2Fragment extends BaseFragment implements View.OnClickListener,
     }
 
 
-
-
-
-
-
-
-
-
     @Override
     public void onClick(View v) {
         Intent it;
         switch (v.getId()) {
             case R.id.address_tv:
-                 it = new Intent(getActivity(), LetterSortActivity.class);
+                it = new Intent(getActivity(), LetterSortActivity.class);
                 it.putExtra("code", "0");
                 startActivityForResult(it, 1);
                 break;
             case R.id.tv_miaomiao:
-                 it = new Intent(getActivity(), MiaomiaoDetailsActivity.class);
+                it = new Intent(getActivity(), MiaomiaoDetailsActivity.class);
                 it.putExtra("type", "1");
                 it.putExtra("lng", lng);
                 it.putExtra("lat", lat);
@@ -589,7 +626,7 @@ public class TabA2Fragment extends BaseFragment implements View.OnClickListener,
                 startActivity(it);
                 break;
             case R.id.tv_tuantuan:
-                 it = new Intent(getActivity(), MiaomiaoDetailsActivity.class);
+                it = new Intent(getActivity(), MiaomiaoDetailsActivity.class);
                 it.putExtra("type", "2");
                 it.putExtra("lng", lng);
                 it.putExtra("lat", lat);
@@ -688,9 +725,9 @@ public class TabA2Fragment extends BaseFragment implements View.OnClickListener,
     @Override
     public void onRefresh(PullLayout pullToRefreshLayout) {
         if (search_tv.getText() != null && search_tv.getText().length() > 0) {
-            getdata(search_tv.getText() + "",2);
+            getdata(search_tv.getText() + "", 2);
         } else {
-            getdata("",2);
+            getdata("", 2);
         }
     }
 
@@ -744,8 +781,6 @@ public class TabA2Fragment extends BaseFragment implements View.OnClickListener,
     }
 
 
-
-
     private void getTuanTuanList(final int state) {
         HashMap<String, Object> maps = new HashMap<>();
         maps.put("size", 10);
@@ -788,7 +823,6 @@ public class TabA2Fragment extends BaseFragment implements View.OnClickListener,
                     }
                 });
     }
-
 
 
 }

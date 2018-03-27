@@ -81,7 +81,6 @@ public class YouYouAdapter extends BaseAdapter {
             holderView.tv_hot = (TextView) convertView.findViewById(R.id.tv_hot);
             holderView.tv_shop_type = (TextView) convertView.findViewById(R.id.tv_shop_type);
             holderView.view = (View) convertView.findViewById(R.id.view);
-
             convertView.setTag(holderView);
         } else {
             holderView = (HolderView) convertView.getTag();
@@ -105,7 +104,7 @@ public class YouYouAdapter extends BaseAdapter {
 
         Glide.with(context).load(youList.getMainImgUrl())
                 .centerCrop()
-                .override(DimenUtils.dip2px(context, 100), DimenUtils.dip2px(context, 100))
+                .override(DimenUtils.dip2px(context, 88), DimenUtils.dip2px(context, 88))
                 .transform(new GlideRoundTransform(context, 4))
                 .placeholder(R.drawable.pic_nomal_loading_style)
                 .error(R.drawable.pic_nomal_loading_style)
@@ -121,15 +120,15 @@ public class YouYouAdapter extends BaseAdapter {
             Random rand = new Random();
             int num = rand.nextInt(1000) + 10;
             holderView.tv_hot.setText("人气" + num);
-
             Random rand2 = new Random();
             int num2 = rand2.nextInt(100) + 10;
-            holderView.tv_money_per.setText("￥"+num2+"/人");
+            holderView.tv_money_per.setText("¥"+num2+"/人");
 
             float Max = 5, Min = 4.0f;
             BigDecimal db = new BigDecimal(Math.random() * (Max - Min) + Min);
             String range=db.setScale(1, BigDecimal.ROUND_HALF_UP).toString();
             holderView.ratingStarView.setRating(Float.valueOf(range));
+            holderView.tv_star_num.setText(range);
         }catch (Exception e){
 
         }

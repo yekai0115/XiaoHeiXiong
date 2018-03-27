@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_detal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -21,32 +22,48 @@
             android:background="@drawable/ic_launcher"
             android:scaleType="fitXY" />
 
-
-        <TextView
-            android:id="@+id/name_tv"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/head_img"
-            android:text="倪文涛"
-            android:textColor="@color/tv_color9"
-            android:textSize="@dimen/size_15" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/head_img"
+                android:text="倪文涛"
+                android:textColor="@color/tv_color9"
+                android:textSize="@dimen/size_15" />
+            <TextView
+                android:id="@+id/time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="2小时前"
+                android:textColor="@color/tv_color17"
+                android:textSize="@dimen/size_10" />
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center|right"
             android:orientation="horizontal">
+
         <TextView
-            android:id="@+id/time_tv"
+            android:id="@+id/tv_see"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="2小时前"
-            android:textColor="@color/tv_color17"
-            android:textSize="@dimen/size_13" />
+            android:layout_height="match_parent"
+            android:text="查看"
+            android:drawableRight="@drawable/home_more"
+            android:drawablePadding="6dp"
+            android:textColor="@color/tv_color15"
+            android:textSize="@dimen/size_14"
+           />
 
         <ImageView
             android:id="@+id/img_delete"
@@ -72,10 +89,10 @@
             android:id="@+id/tv_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:text="今天天气真好，好开心！！！！！！！！！！！！！！！！！"
             android:textColor="@color/tv_color9"
-            android:textSize="@dimen/size_17" />
+            android:textSize="@dimen/size_15" />
 
         <td.com.xiaoheixiong.views.toutiao.NineGridTestLayout xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/layout_nine_grid"
@@ -86,19 +103,19 @@
 
 
         <TextView
+            android:id="@+id/tv_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
             android:layout_marginTop="14dp"
             android:drawableLeft="@drawable/headline_address"
             android:drawablePadding="6dp"
-            android:text="深圳会展"
             android:textColor="@color/tv_color22"
             android:textSize="@dimen/size_13" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
+            android:layout_marginTop="12dp"
             android:background="@color/line_color" />
 
         <LinearLayout
@@ -111,12 +128,11 @@
 
             <TextView
                 android:id="@+id/tv_zhuanfa"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingRight="25dp"
-                android:layout_weight="1"
                 android:drawableLeft="@drawable/headline_transpond"
                 android:drawablePadding="6dp"
+                android:paddingRight="35dp"
                 android:gravity="center|left"
                 android:text="2"
                 android:textColor="@color/tv_color9"
@@ -124,13 +140,12 @@
 
             <TextView
                 android:id="@+id/tv_evaluate"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingRight="25dp"
-                android:layout_marginLeft="25dp"
-                android:layout_weight="1"
                 android:drawableLeft="@drawable/headline_evaluate"
                 android:drawablePadding="6dp"
+                android:paddingLeft="35dp"
+                android:paddingRight="25dp"
                 android:gravity="center|left"
                 android:text="2"
                 android:textColor="@color/tv_color9"
@@ -139,12 +154,11 @@
 
             <LinearLayout
                 android:id="@+id/zan_ll"
-                android:layout_width="0dp"
-                android:layout_marginLeft="25dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:paddingLeft="45dp"
                 android:layout_alignParentRight="true"
-                android:layout_weight="1"
-                android:gravity="center|left"
+                android:gravity="center|right"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -158,7 +172,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
-                    android:text="2"
                     android:textColor="@color/tv_color9"
                     android:textSize="@dimen/size_15" />
             </LinearLayout>

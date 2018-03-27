@@ -12,6 +12,9 @@ public class HttpUrls implements Serializable {
     //生产
     public static final String XHX_Rest = "http://www.xiaoheixiong.net/";
 
+
+    public static final String XHX_Rest2 = "http://api.xiaoheixiong.net/";
+
     /* 服务器接口 */
 
     // 商家进件，普通
@@ -53,13 +56,13 @@ public class HttpUrls implements Serializable {
     //我的商户
     public static final String XHX_my_mechat = "http://html.xiaoheixiong.net/#/agency";
     //头条
-    public static final String XHX_toutiao = HttpUrls.XHX_Rest + "rest/xhx/headlineInfo/getHeadlineList";
+    public static final String XHX_toutiao = HttpUrls.XHX_Rest2 + "headline/getHeadLists";
 
     //删除头条
     public static final String XHX_delete_toutiao = HttpUrls.XHX_Rest + "/rest/xhx/headlineInfo/delHeadlineInfo";
 
     //发布头条
-    public static final String XHX_add_toutiao = HttpUrls.XHX_Rest + "/rest/xhx/headlineInfo/saveHeadlineInfo";
+    public static final String XHX_add_toutiao = HttpUrls.XHX_Rest2 + "headline/pushHeadLine";
 
     //新增团团券
     public static final String XHX_add_tuantuan ="http://api.xiaoheixiong.net/activity/addCoupon";
@@ -120,6 +123,11 @@ public class HttpUrls implements Serializable {
     public static final String XHX_change_Headimg = HttpUrls.XHX_Rest + "rest/xhx/user/updateHeadImg";
     //收款码
     public static final String XHX_collection_code = HttpUrls.XHX_Rest + "rest/xhx/merQr/gen";
+
+    //收款码
+    public static final String XHX_collection_code2 ="http://pay.xiaoheixiong.net/public/merInfo";
+
+
     //卡卷详情
     public static final String XHX_MarkCardDtl = HttpUrls.XHX_Rest + "rest/xhx/merMarkActi/getMyMarkCardDtl";
     //分享码
@@ -130,7 +138,17 @@ public class HttpUrls implements Serializable {
     public static final String XHX_delete = HttpUrls.XHX_Rest + "rest/favourite/delete";
 
     //点赞
-    public static final String XHX_Zan = HttpUrls.XHX_Rest + "rest/xhx/headlineInfo/praiseHeadlineInfo";
+    public static final String XHX_Zan = HttpUrls.XHX_Rest2 + "headline/updatePraise";
+
+
+    //评论
+    public static final String XHX_evaulate = HttpUrls.XHX_Rest2 + "headline/pushHeadlineReply";
+
+    //评论列表
+    public static final String XHX_evaulate_list = HttpUrls.XHX_Rest2 + "headline/getHeadlineReply";
+
+
+
     //领取卡券
     public static final String XHX_GetMerMark = HttpUrls.XHX_Rest + "rest/xhx/merMarkActi/userGetMerMark";
     //妙秒查看更多

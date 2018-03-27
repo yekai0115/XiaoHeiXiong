@@ -4,6 +4,7 @@ package td.com.xiaoheixiong.dialogs;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.widget.DrawerLayout.LayoutParams;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -57,9 +58,9 @@ public class SelectPicPopupWindow extends PopupWindow {
         //设置SelectPicPopupWindow弹出窗体动画效果  
         this.setAnimationStyle(R.style.PopupAnimation);  
         //实例化一个ColorDrawable颜色为半透明  
-//        ColorDrawable dw = new ColorDrawable(00000000);  
-        //设置SelectPicPopupWindow弹出窗体的背景  
-//        this.setBackgroundDrawable(dw);  
+        ColorDrawable dw = new ColorDrawable(60000000);
+   //     设置SelectPicPopupWindow弹出窗体的背景
+        this.setBackgroundDrawable(dw);
         //mMenuView添加OnTouchListener监听判断获取触屏位置如果在选择框外面则销毁弹出框  
         mMenuView.setOnTouchListener(new OnTouchListener() {
               

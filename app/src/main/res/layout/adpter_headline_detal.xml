@@ -3,26 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingLeft="10dp"
-    >
+    android:paddingLeft="10dp">
 
 
+    <ImageView
+        android:id="@+id/head_img"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/ic_launcher"
+        android:scaleType="fitXY" />
 
-        <ImageView
-            android:id="@+id/head_img"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="21dp"
-            android:background="@drawable/ic_launcher"
-            android:scaleType="fitXY" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="18dp"
+        android:gravity="center|left|top"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center|left|top"
-            android:layout_marginTop="25dp"
-            android:layout_marginLeft="10dp"
-            android:orientation="vertical">
         <TextView
             android:id="@+id/name_tv"
             android:layout_width="wrap_content"
@@ -38,19 +37,18 @@
             android:id="@+id/time_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-          android:layout_marginTop="11dp"
+            android:layout_marginTop="5dp"
             android:text="2小时前"
             android:textColor="@color/tv_color9"
             android:textSize="@dimen/size_15" />
 
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="13.5dp"
-                android:background="@color/line_color"/>
-        </LinearLayout>
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="10.5dp"
+            android:background="@color/line_color" />
+    </LinearLayout>
 
 
 </LinearLayout>

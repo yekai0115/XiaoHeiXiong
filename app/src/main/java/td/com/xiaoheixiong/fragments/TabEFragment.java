@@ -568,7 +568,6 @@ public class TabEFragment extends BaseFragment {
                     button.show();
                     return;
                 }
-                ;
                 setPic();
                 break;
 

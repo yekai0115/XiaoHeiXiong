@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/parent_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,9 +7,20 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/rl_pop"
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/white">
 
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:src="@drawable/map_return1" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -22,11 +33,12 @@
 
 
         <ImageView
+            android:id="@+id/img_add"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:paddingRight="15dp"
             android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:src="@drawable/headline_release" />
     </RelativeLayout>
 
@@ -34,12 +46,17 @@
     <td.com.xiaoheixiong.views.pulltorefresh.PullableRefreshScrollView2
         android:id="@+id/refreshScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_pop"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:scrollbars="none">
 
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -142,12 +159,15 @@
                     android:id="@+id/lv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
                     android:cacheColorHint="#00000000"
-                    android:divider="@color/line_color"
-                    android:dividerHeight="0.5dp"
+                    android:divider="@null"
                     android:listSelector="@android:color/transparent"
                     android:scrollbars="none" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="20dp"
+                    android:background="@color/white" />
             </LinearLayout>
 
             <include
@@ -155,8 +175,73 @@
                 layout="@layout/headline_detal_filter" />
 
 
-        </FrameLayout>
-
-
+        </LinearLayout>
     </td.com.xiaoheixiong.views.pulltorefresh.PullableRefreshScrollView2>
-</LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="54.5dp"
+            android:background="@color/white"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/ed_comment"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/gray_bg2"
+                android:gravity="center|left"
+                android:hint="请评论po主"
+                android:imeOptions="actionSend"
+                android:inputType="text"
+                android:paddingLeft="11dp"
+                android:textColor="@color/tv_color9"
+                android:textColorHint="@color/tv_color26"
+                android:textSize="@dimen/size_14" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="8dp"
+                android:drawablePadding="4dp"
+                android:drawableTop="@drawable/headline_praise"
+                android:gravity="center"
+                android:paddingLeft="30dp"
+                android:paddingRight="36dp"
+                android:text="点赞"
+                android:textColor="@color/tv_color9"
+                android:textSize="@dimen/size_14" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="8dp"
+                android:drawablePadding="4dp"
+                android:drawableTop="@drawable/headline_transpond"
+                android:gravity="center"
+                android:paddingRight="35dp"
+                android:text="转发"
+                android:textColor="@color/tv_color9"
+                android:textSize="@dimen/size_14" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/applin" />
+    </FrameLayout>
+</RelativeLayout>

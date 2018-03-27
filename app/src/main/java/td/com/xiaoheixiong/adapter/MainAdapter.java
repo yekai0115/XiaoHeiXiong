@@ -20,6 +20,7 @@ import java.util.List;
 import td.com.xiaoheixiong.R;
 import td.com.xiaoheixiong.Utils.CircleImageTransformation;
 import td.com.xiaoheixiong.Utils.GlideCircleTransform;
+import td.com.xiaoheixiong.Utils.ListUtils;
 import td.com.xiaoheixiong.Utils.ScreenTools;
 import td.com.xiaoheixiong.beans.TouTiaoBean;
 import td.com.xiaoheixiong.views.CustomImageView;
@@ -63,7 +64,7 @@ public class MainAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         TouTiaoBean touTiaoBean= datalist.get(position);
-        List<String> itemList = touTiaoBean.getImageList();
+        List<String> itemList = ListUtils.getList(touTiaoBean.getImages());
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_ninegridlayout, parent, false);
             viewHolder = new ViewHolder();
@@ -94,17 +95,17 @@ public class MainAdapter extends BaseAdapter {
             viewHolder.ivMore.setImagesData(itemList);
         }
         viewHolder.tv_desc.setText(touTiaoBean.getDescription());
-        viewHolder.time_tv.setText(touTiaoBean.getPublishTime());
-        String mercName=touTiaoBean.getMercName();
+        viewHolder.time_tv.setText(touTiaoBean.getCreate_time());
+        String mercName=touTiaoBean.getMerc_name();
         if(mercName == null || mercName.trim().length() == 0){
             viewHolder.name_tv.setText("");
         }else{
             viewHolder.name_tv.setText(mercName);
         }
-        int realPraise=touTiaoBean.getRealPraise();
+        String realPraise=touTiaoBean.getReal_praise();
         viewHolder.zanNum_tv.setText(realPraise+"");
 
-        String mercImg=touTiaoBean.getMercImg();
+        String mercImg=touTiaoBean.getImages();
         if (StringUtils.isNotBlank(mercImg)) {
             //   glideRequest.load(datas.get(position).get("mercImg")).transform(new GlideCircleTransform(mContext)).into(viewHolder.head_img);
 

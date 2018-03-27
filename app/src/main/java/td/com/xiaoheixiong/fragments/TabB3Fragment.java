@@ -129,8 +129,8 @@ public class TabB3Fragment extends BaseFragment implements PullLayout.OnRefreshL
                         if (oJSON.get("RSPCOD").equals("000000")) {
                             JsonRootBean jsonRootBean= GsonUtil.GsonToBean(oJSON.toString(),JsonRootBean.class);
                             Detail detail=jsonRootBean.getDetail();
-                            List<TouTiaoBean> list=  detail.getList();
-                             pages=  detail.getPages();
+                            List<TouTiaoBean> list=  detail.getLists();
+                             pages=  detail.getTotalPage();
                             if(state==1){
                                 touTiaoBeanList.clear();
                             }else if(state==2){
