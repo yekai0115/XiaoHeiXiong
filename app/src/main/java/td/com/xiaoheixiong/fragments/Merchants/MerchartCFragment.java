@@ -432,21 +432,21 @@ public class MerchartCFragment extends BaseFragment implements OnClickListener {
 
                 parentAct.entbankInf.setOpnbank(bankName);
                 parentAct.entbankInf.setName(name);
-                if (cardtype.equals("0")) {
+                if (cardtype.equals("0")) {//企业
                     parentAct.entbankInf.setComaccnum(cardNum);// 对公开户许可证的数字账号
-                } else if (cardtype.equals("1")) {
+                } else if (cardtype.equals("1")) {//个体
                     parentAct.entbankInf.setPriaccount(cardNum);// 对私开户许可证的数字账号
                 }
                 parentAct.entbankInf.setCardtype(cardtype);
                 parentAct.entbankInf.setProvince(province);
                 parentAct.entbankInf.setCity(city);
                 parentAct.entbankInf.setPonaccname(branch);
-                parentAct.entbankInf.setCardphone(phone);
+                parentAct.entbankInf.setCardphone(phone);//银行预留手机号
                 if (cardtype.equals("0")) {//对公
-                    parentAct.enterpriseInf.setOpenlicense(permitPic);//开户许可证
+                    parentAct.enterpriseInf.setOpenlicense(permitPic);//开户许可证照片
                 } else if (cardtype.equals("1")) {//对私
-                    parentAct.enterpriseInf.setBalancecardone(cashCard_Z);//结算卡正面
-                    parentAct.enterpriseInf.setBalancecardtwo(cashCard_B); //结算卡反面
+                    parentAct.enterpriseInf.setBalancecardone(cashCard_Z);//结算储蓄银行卡正面
+                    parentAct.enterpriseInf.setBalancecardtwo(cashCard_B); //结算储蓄银行卡背面
                 }
 
 
@@ -460,7 +460,7 @@ public class MerchartCFragment extends BaseFragment implements OnClickListener {
                     maps.putAll(reflect(parentAct.enterpriseInf, "enterpriseInf"));
                     maps.putAll(reflect(parentAct.entAddress, "entAddress"));
                     maps.putAll(reflect(parentAct.entbankInf, "entbankInf"));
-                    maps.put("phone", parentAct.phone);//银行预留手机号
+                    maps.put("phone", parentAct.phone);//负责人手机号
                     maps.put("typeId", parentAct.enterpriseInf.industryid + "");//行业类型id
                     Log.e("maps++++", "maps" + maps);
                     Log.e("phone", parentAct.phone);

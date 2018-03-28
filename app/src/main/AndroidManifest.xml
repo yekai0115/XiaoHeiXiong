@@ -247,6 +247,11 @@
 
         <activity android:name=".activity.HeadLineDetalctivity" />
 
+        <activity android:name=".activity.MyMemberActivity" />
+        <activity android:name=".activity.AgentEarnsActivity" />
+        <activity android:name=".activity.MyAccountActivity" />
+
+
 
         <!-- ImagePicker 相关配置 -->
         <activity android:name="td.com.xiaoheixiong.imagepicker.cropper.CropImageActivity"

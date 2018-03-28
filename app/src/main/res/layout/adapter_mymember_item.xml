@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:paddingBottom="20dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="20dp">
+
+
+    <ImageView
+        android:id="@+id/img_head_pic"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tv_membre_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="月卡团购券"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="@color/tv_color8"
+            android:textSize="@dimen/size_16" />
+
+
+        <TextView
+            android:id="@+id/tv_member_from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="总量:"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="@color/tv_color13"
+            android:textSize="@dimen/size_14" />
+
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:gravity="center|left"
+            android:text="进行中"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="@color/tv_color13"
+            android:textSize="@dimen/size_14" />
+
+
+    </LinearLayout>
+</LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

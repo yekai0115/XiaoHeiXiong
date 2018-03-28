@@ -9,7 +9,7 @@ import android.widget.ScrollView;
 public class PullableRefreshScrollView extends ScrollView implements Pullable
 {
 	/**是否需要上拉：默认不需要*/
-	private Boolean needPullUp=false;
+	public Boolean needPullUp=false;
 	public OnScrollChangeListener onScrollChangeListener;
 
 	public View contentView;

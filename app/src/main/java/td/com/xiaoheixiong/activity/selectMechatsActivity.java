@@ -25,7 +25,7 @@ public class selectMechatsActivity extends BaseActivity {
     TextView titleTv;
     @Bind(R.id.title_right_rl)
     RelativeLayout titleRightRl;
-    private String Mine = "";
+    private String Mine = "";//自己申请、帮人申请
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

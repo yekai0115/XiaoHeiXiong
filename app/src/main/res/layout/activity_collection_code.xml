@@ -80,7 +80,7 @@
                     android:layout_height="66dp"
                     android:layout_gravity="center|top"
                     android:gravity="center"
-                    android:text="扫码二维码码支付"
+                    android:text="扫描二维码支付"
                     android:textColor="@color/tv_color27"
                     android:textSize="@dimen/size_17" />
 
@@ -104,7 +104,7 @@
                     android:layout_height="66dp"
                     android:layout_gravity="center|bottom"
                     android:gravity="center"
-                    android:text="点击二维码码保存"
+                    android:text="点击二维码保存"
                     android:textColor="@color/tv_color28"
                     android:textSize="@dimen/size_14" />
             </FrameLayout>

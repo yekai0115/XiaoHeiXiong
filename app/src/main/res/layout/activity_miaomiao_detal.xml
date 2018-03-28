@@ -6,8 +6,6 @@
     android:orientation="vertical">
 
 
-
-
     <td.com.xiaoheixiong.views.pulltorefresh.PullLayout
         android:id="@+id/refresh_view"
         android:layout_width="match_parent"
@@ -226,12 +224,22 @@
                         android:paddingRight="14dp"
                         android:paddingTop="17.5dp">
 
-                        <ImageView
-                            android:id="@+id/img_shop_pic"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:background="@drawable/bg_style4"
-                            android:scaleType="centerCrop" />
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/img_shop_pic"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:scaleType="centerCrop" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_style4" />
+
+                        </FrameLayout>
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -352,6 +360,7 @@
         android:id="@+id/ll_title"
         android:layout_width="match_parent"
         android:layout_height="40dp">
+
         <TextView
             android:id="@+id/tv_return"
             android:layout_width="wrap_content"

@@ -5,23 +5,23 @@ import java.io.Serializable;
 public class EnterpriseInf implements Serializable {
     private String entname; // 企业名称
     private String orgcode;//组织机构代码
-    private String busregnum;//营业执照注册号
+    private String busregnum;//营业执照注册号(统一社会信用代码)
     private String idcardtwo;//身份证反面
-    private String name;//法人姓名
+    private String name;//负责人姓名
     private String idcard;//证件号
     private String idcardType;//证件类型
     private String idcardone;//身份证正面
     private String orgcodeimg;//组织机构代码图片
     private String busregimg;//营业执照图片
     private String documenttype;//证件类型（0普通营业执照，1多证合一营业执照）
-    private String validterm;//有效期限
+    private String validterm;//身份证有效期限
     private String term;//长期（0，1长期）
     public  String industryid = "";  //行业类型id
     private String merlogourl;//二维码
-    private String entabb; //企业简称
+    private String entabb; //企业简称(商户简称)
 
-    private String balancecardone;  //结算卡正面
-    private String balancecardtwo; //结算卡反面
+    private String balancecardone;  //结算储蓄银行卡正面
+    private String balancecardtwo; //结算储蓄银行卡背面
     private String gatepic; //门头照
     private String openlicense; //开户许可证
     private String handidcardpic; //手持身份证照片

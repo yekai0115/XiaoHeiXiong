@@ -161,9 +161,9 @@
                         android:layout_weight="1"
                         android:drawableTop="@mipmap/y_sy_icon"
                         android:gravity="center"
-                        android:text="我的收益"
+                        android:text="代理商收益"
                         android:textColor="@color/black"
-                        android:visibility="invisible"/>
+                        android:visibility="visible"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -335,7 +335,8 @@
                         android:drawableTop="@mipmap/y_sy_icon"
                         android:gravity="center"
                         android:text="我的收益"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:id="@+id/sh_yxtg_tv"

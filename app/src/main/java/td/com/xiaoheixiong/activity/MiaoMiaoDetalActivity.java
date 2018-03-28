@@ -152,7 +152,7 @@ public class MiaoMiaoDetalActivity extends BaseActivity implements PullableRefre
         long times = (long) time * 1000;
         cd_time.start(times);
         Glide.with(mContext).load(mainImg)
-                .centerCrop()
+                .fitCenter()
                 .override(DimenUtils.dip2px(mContext, 80), DimenUtils.dip2px(mContext, 80))
                 .transform(new GlideRoundTransform(mContext, 4))
                 .placeholder(R.drawable.pic_nomal_loading_style)

@@ -10,15 +10,11 @@
     <include layout="@layout/xiaoheixiong_title" />
 
 
-
-
-
-        <td.com.xiaoheixiong.views.PagerSlidingTabStrip
-            android:id="@+id/orderTabs"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/white" />
-
+    <td.com.xiaoheixiong.views.PagerSlidingTabStrip
+        android:id="@+id/orderTabs"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/white" />
 
 
     <!-- this is part 1 -->

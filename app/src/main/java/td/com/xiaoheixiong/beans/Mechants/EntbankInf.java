@@ -8,11 +8,11 @@ public class EntbankInf implements Serializable {
     private String opnbank="";// 开户行
     private String ponaccname="";// 开户支行名
     private String comaccnum="";// 对公银行账号
-    private String province="";
-    private String city="";
+    private String province="";//开户行省
+    private String city="";//开户行市
     private String pubbankurl="";// 对公许可证图
     private String priaccount="";// 对私银行账号
-    private String cardtype="";// 银行账号类型
+    private String cardtype="";// 银行账号类型（0企业；1个人）
     private String cardphone="";//银行预留手机号
 
 

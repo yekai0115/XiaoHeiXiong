@@ -43,10 +43,13 @@ import td.com.xiaoheixiong.Utils.LQRPhotoSelectFragmentUtils;
 import td.com.xiaoheixiong.Utils.LQRPhotoSelectUtils;
 import td.com.xiaoheixiong.Utils.MyCacheUtil;
 import td.com.xiaoheixiong.Utils.permissionManager.PermissionsCheckerUtil;
+import td.com.xiaoheixiong.activity.AgentEarnsActivity;
 import td.com.xiaoheixiong.activity.CollectionCodeActivity;
 import td.com.xiaoheixiong.activity.IntegralWebViewActivity;
 import td.com.xiaoheixiong.activity.MarketingActivity;
+import td.com.xiaoheixiong.activity.MyAccountActivity;
 import td.com.xiaoheixiong.activity.MyHeadLineActivity;
+import td.com.xiaoheixiong.activity.MyMemberActivity;
 import td.com.xiaoheixiong.activity.SettingActivity;
 import td.com.xiaoheixiong.activity.selectMechatsActivity;
 import td.com.xiaoheixiong.aliutil.MyOSSConfig;
@@ -260,19 +263,19 @@ public class TabEFragment extends BaseFragment {
                 yunyingLl.setVisibility(View.VISIBLE);
                 shanghuLl.setVisibility(View.VISIBLE);
                 if (agentLevel.equals("1")) {
-                    dengjiTv.setText("代理");
+                    dengjiTv.setText("服务商");
                     zhifuImg.setVisibility(View.VISIBLE);
                     weixinImg.setVisibility(View.VISIBLE);
                     shangjiaImg.setVisibility(View.VISIBLE);
                     dailiImg.setVisibility(View.VISIBLE);
                 } else if (agentLevel.equals("2")) {
-                    dengjiTv.setText("分公司");
+                    dengjiTv.setText("运营商");
                     zhifuImg.setVisibility(View.VISIBLE);
                     weixinImg.setVisibility(View.VISIBLE);
                     shangjiaImg.setVisibility(View.VISIBLE);
                     dailiImg.setVisibility(View.GONE);
                 } else if (agentLevel.equals("3")) {
-                    dengjiTv.setText("市代理");
+                    dengjiTv.setText("子公司");
                     zhifuImg.setVisibility(View.VISIBLE);
                     weixinImg.setVisibility(View.VISIBLE);
                     shangjiaImg.setVisibility(View.VISIBLE);
@@ -328,11 +331,15 @@ public class TabEFragment extends BaseFragment {
     @OnClick({R.id.daili_tv, R.id.mechat_register_tv, R.id.my_mechat_tv, R.id.shouyi, R.id.set_img,
             R.id.right_img, R.id.pay_code_tv, R.id.my_books_tv, R.id.sh_shouyi_tv, R.id.dpgl_tv, R.id.my_mvp_tv,
             R.id.fans_tv, R.id.yh_money_tv, R.id.yh_points_tv, R.id.yh_zuji_tv, R.id.yh_guanzhu_tv, R.id.yh_share_tv,
-            R.id.yh_toutiao_tv, R.id.sh_yx_tv, R.id.my_shop_tv, R.id.sh_dpkj_tv, R.id.sh_dphb_tv, R.id.yh_kq_tv, R.id.sh_yxtg_tv, R.id.head_img,R.id.tradingManagement_tv})
+            R.id.yh_toutiao_tv, R.id.sh_yx_tv, R.id.my_shop_tv, R.id.sh_dpkj_tv,
+            R.id.sh_dphb_tv, R.id.yh_kq_tv, R.id.sh_yxtg_tv, R.id.head_img,R.id.tradingManagement_tv,R.id.shouyi33})
     public void onViewClicked(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
-
+            case R.id.shouyi33://代理商收益
+                intent.setClass(getActivity(), AgentEarnsActivity.class);
+                startActivity(intent);
+                break;
             case R.id.daili_tv:
                 //  Intent it = new Intent(getActivity(), IntegralWebViewActivity.class);
                 intent.setClass(getActivity(), IntegralWebViewActivity.class);
@@ -399,9 +406,11 @@ public class TabEFragment extends BaseFragment {
                 //  intent.putExtra("url", HttpUrls.XHX_PayCode);
                 // startActivity(intent);
                 break;
-            case R.id.my_books_tv:
-                intent.setClass(getActivity(), IntegralWebViewActivity.class);
-                intent.putExtra("url", HttpUrls.XHX_Mybooks);
+            case R.id.my_books_tv://我的账本
+//                intent.setClass(getActivity(), IntegralWebViewActivity.class);
+//                intent.putExtra("url", HttpUrls.XHX_Mybooks);
+//                startActivity(intent);
+                intent.setClass(getActivity(), MyAccountActivity.class);
                 startActivity(intent);
                 break;
             case R.id.sh_shouyi_tv:
@@ -429,11 +438,13 @@ public class TabEFragment extends BaseFragment {
                 startActivity(intent);
 
                 break;
-            case R.id.fans_tv:
-                intent.setClass(getActivity(), IntegralWebViewActivity.class);
-                intent.putExtra("url", HttpUrls.XHX_fans);
-                startActivity(intent);
+            case R.id.fans_tv://流量管理
+//                intent.setClass(getActivity(), IntegralWebViewActivity.class);
+//                intent.putExtra("url", HttpUrls.XHX_fans);
+//                startActivity(intent);
 
+                intent.setClass(getActivity(), MyMemberActivity.class);
+                startActivity(intent);
                 break;
             case R.id.yh_money_tv:
                 intent.setClass(getActivity(), IntegralWebViewActivity.class);

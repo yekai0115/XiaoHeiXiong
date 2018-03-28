@@ -9,17 +9,26 @@ import android.os.Environment;
 
 public class MyConstant {
 
-    public static int PIC_DPI2=2;
+   // public final static String WEB_SERVICE_BASE = "http://192.168.0.2:8014/";
+    public final static String WEB_SERVICE_BASE = "http://transaction.xiaoheixiong.net/";
+    public final static String SUCCESS = "000000";
+
+
+    public static int PIC_DPI2 = 2;
     public static final int DEF_IMG_W = 800;
     public static final int DEF_IMG_H = 640;
 
-    /**阿里云EndPoint*/
+    /**
+     * 阿里云EndPoint
+     */
     public static final String ALI_ENDPOINT = "http://oss-cn-shenzhen.aliyuncs.com";
     public static final String ALI_KEYID = "LTAI6rTfz7ikikTG";
     public static final String ALI_KEYSECRET = "NRDMFWjDHmgvZGVh18WbWiUWC1KZ1R";
 
 
-    /**上传下载的bucketName*/
+    /**
+     * 上传下载的bucketName
+     */
     public static final String ALI_BUCKET_PRIVATE = "litterblackbear-private-v1"; //
     public static final String ALI_PUBLIC_BUCKET_PUBLIC = "litterblackbear-public-v1"; //
 

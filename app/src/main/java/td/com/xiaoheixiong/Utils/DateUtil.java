@@ -214,10 +214,32 @@ public class DateUtil {
 	 * @return
 	 */
 	public static String getStandardTime(long timestamp) {
-		sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
-		Date date = new Date(timestamp);
+		Date date;
+		try{
+			sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
+			 date = new Date(timestamp);
+		}catch (Exception e){
+			date = new Date(System.currentTimeMillis());
+		}
 		return sdf.format(date);
 	}
+
+	public static String times(String time) {
+		SimpleDateFormat sdr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String times;
+		try {
+			long lcc = Long.valueOf(time);
+			int i = Integer.parseInt(time);
+			 times = sdr.format(new Date(lcc * 1000L));
+		}catch (Exception e){
+			times = sdr.format(new Date(System.currentTimeMillis()));
+		}
+		return times;
+
+	}
+
+
+
 
 	/**
 	 * 获取年月日时间
